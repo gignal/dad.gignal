@@ -36,6 +36,12 @@ class Stream extends Backbone.Collection
 
   model: Post
 
+  url: ->
+    eventid = $('#gignal-widget').data('eventid')
+    if getParameterByName 'eventid'
+      eventid = getParameterByName 'eventid'
+    return '//api.gignal.com/fetch/' + eventid + '?callback=?'
+
   calling: false
   parameters:
     limit: 25

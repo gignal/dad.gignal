@@ -1,12 +1,12 @@
 {
-  "name": "rf13", 
-  "version": "0.0.0",
+  "name": "gignal-widget",
+  "version": "0.0.1",
   "dependencies": {
-    "backbone": "~1.0.0", 
-    "underscore": "~1.4.4",
-    "isotope": "~1.5.25", 
-    "hogan": "latest", 
-    "humane-dates": "latest", 
+    "backbone": "~1.1.0",
+    "underscore": "~1.5.2",
+    "isotope": "~1.5.25",
+    "hogan": "latest",
+    "humane-dates": "latest",
     "scrollbottom": "latest"
   }
 }

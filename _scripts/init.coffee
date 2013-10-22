@@ -13,14 +13,7 @@ jQuery ($) ->
   Backbone.$ = $
 
   document.gignal.widget = new document.gignal.views.Event()
-
-  eventid = $('#gignal-widget').data('eventid')
-  if getParameterByName 'eventid'
-    eventid = getParameterByName 'eventid'
-
-  document.gignal.stream = new Stream [],
-    url: '//api.gignal.com/fetch/' + eventid + '?callback=?'
-
+  document.gignal.stream = new Stream()
 
   $(window).on 'scrollBottom', offsetY: -100, ->
     document.gignal.stream.update true

@@ -70,6 +70,15 @@ Stream = (function(_super) {
 
   Stream.prototype.model = Post;
 
+  Stream.prototype.url = function() {
+    var eventid;
+    eventid = $('#gignal-widget').data('eventid');
+    if (getParameterByName('eventid')) {
+      eventid = getParameterByName('eventid');
+    }
+    return '//api.gignal.com/fetch/' + eventid + '?callback=?';
+  };
+
   Stream.prototype.calling = false;
 
   Stream.prototype.parameters = {
@@ -344,19 +353,12 @@ getParameterByName = function(name) {
 };
 
 jQuery(function($) {
-  var eventid;
   $.ajaxSetup({
     cache: true
   });
   Backbone.$ = $;
   document.gignal.widget = new document.gignal.views.Event();
-  eventid = $('#gignal-widget').data('eventid');
-  if (getParameterByName('eventid')) {
-    eventid = getParameterByName('eventid');
-  }
-  document.gignal.stream = new Stream([], {
-    url: '//api.gignal.com/fetch/' + eventid + '?callback=?'
-  });
+  document.gignal.stream = new Stream();
   return $(window).on('scrollBottom', {
     offsetY: -100
   }, function() {
