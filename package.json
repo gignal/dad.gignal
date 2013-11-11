@@ -1,7 +1,7 @@
 {
   "name": "gignal-widget",
   "author": "Jacob Friis Saxberg",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "",
   "devDependencies": {
     "grunt": "0.4.x",

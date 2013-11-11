@@ -1,10 +1,10 @@
 {
   "name": "gignal-widget",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "dependencies": {
-    "backbone": "~1.1.0",
-    "underscore": "~1.5.2",
-    "isotope": "~1.5.25",
+    "backbone": "1.1.x",
+    "underscore": "1.5.x",
+    "isotope": "1.5.x",
     "hogan": "latest",
     "humane-dates": "latest",
     "scrollbottom": "latest"

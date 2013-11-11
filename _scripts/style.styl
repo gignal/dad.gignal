@@ -42,23 +42,33 @@ box_shadow = 0 8px 6px -6px black
       img
         border: none
 
-      .gignal-text
-        position: relative
-        padding: 10px
-        word-wrap: break-word
-        max-height: 200px
-        overflow: hidden
-        color: text_color
-        text-align: center
-
-        .message
-          font-family: Georgia, Arial, sans-serif;
-
       hr
         border: 0
         height: 1px
         background: background_color
         margin-bottom: 0
+
+      .gignal-unibox
+        position: relative
+        padding: 10px
+        word-wrap: break-word
+        // max-height: 200px
+        overflow: hidden
+        color: text_color
+        text-align: center
+
+        .gignal-image
+          height: 185px
+          background-size: cover
+          background-image: url('../gignal/images/Gignal-G.png')
+
+        .message
+          font-family: Georgia, Arial, sans-serif;
+          max-height: 200px
+
+        .gignal-box-footer
+          margin-top: 145px
+
 
       .gignal-box-footer
         position: relative
@@ -97,63 +107,13 @@ box_shadow = 0 8px 6px -6px black
       box-shadow: none
 
       .gignal-text
-        color: #fff
+        color: text_color
 
       a
-        color: #eee
-
-      hr
-        background: #fff
+        color: action_link_color
 
       .gignal-box-footer
         color: text_color
 
       .gignal-service
         display: none
-
-    .gignal-imagebox
-      position: relative
-      padding: 10px
-      //padding-bottom: 0
-      word-wrap: break-word
-      overflow: hidden
-      color: background_color
-      text-align: center
-
-      .gignal-image
-        height: 185px
-        background-size: cover
-        background-image: url('../gignal/images/Gignal-G.png')
-
-      // .gignal-box-footer
-      //   margin-top: 145px
-
-
-  #gignal-footer
-    position: fixed
-    right: -55px
-    bottom: 80px
-    //width: 180px
-    z-index: 9999
-    -webkit-transform: rotate(-90deg)
-    -moz-transform: rotate(-90deg)
-    -o-transform: rotate(-90deg)
-    -ms-transform: rotate(-90deg)
-    transform: rotate(-90deg)
-    //box-shadow: -3px -8px 3px -6px #000
-
-    .flap
-      position: relative
-      background-color: #000
-      opacity: 0.75
-      width: 84px
-      height: 100px
-      margin: 0 auto
-
-      img
-        position: relative
-        top: 8px
-        height: 23px
-        display: block
-        margin: 0 auto
-        border: none

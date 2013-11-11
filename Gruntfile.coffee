@@ -3,9 +3,9 @@ module.exports = (grunt) ->
   grunt.initConfig
 
     coffee:
-      compileWithMaps:
+      app:
         options:
-          #sourceMap: true
+          sourceMap: true
           join: true
           bare: true
         files:
@@ -27,9 +27,9 @@ module.exports = (grunt) ->
 
     uglify:
       options:
-        # sourceMapRoot: 'gignal/lib'
-        # sourceMapIn: 'gignal/lib/app.js.map'
-        # sourceMap: './gignal/lib/app.min.js.map'
+        sourceMapRoot: 'gignal/lib'
+        sourceMapIn: 'gignal/lib/app.js.map'
+        sourceMap: './gignal/lib/app.min.js.map'
         mangle: false
         #wrap: 'gignal'
       app:

@@ -6,6 +6,7 @@ class Post extends Backbone.Model
 
   idAttribute: 'stream_id'
   re_links: /((http|https)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?)/g
+  offset = ((new Date()).getTimezoneOffset() * 60) - 3600
 
   getData: =>
     text = @get 'text'
@@ -20,14 +21,19 @@ class Post extends Backbone.Model
         direct = 'http://facebook.com/' + @get 'original_id'
       else
         direct = '#'
+    # convert time to local tz
+    created = (new Date(@get('created'))).getTime() / 1000
+    created_local = if offset >= 0 then created - offset else created_local = created + offset
+    @set 'created_local', new Date(created_local * 1000)
+    # prepare data
     data =
       message: text
       username: username
       name: @get 'name'
-      since: humaneDate @get 'creation'
+      since: humaneDate @get('created_local')
       service: @get 'service'
       user_image: @get 'user_image'
-      photo: @get 'large_photo'
+      photo: if @get('large_photo') isnt '' then @get('large_photo') else false
       direct: direct
     return data
 
@@ -37,10 +43,13 @@ class Stream extends Backbone.Collection
   model: Post
 
   url: ->
+    #return '/test/5244076418d1f.js'
     eventid = $('#gignal-widget').data('eventid')
     if getParameterByName 'eventid'
       eventid = getParameterByName 'eventid'
     return '//api.gignal.com/fetch/' + eventid + '?callback=?'
+    #return '//127.0.0.1:3000/fetch/' + eventid + '?callback=?'
+    
 
   calling: false
   parameters:
@@ -55,13 +64,8 @@ class Stream extends Backbone.Collection
     @updateTimes()
 
   inset: (model) =>
-    switch model.get 'type'
-      when 'text'
-        view = new document.gignal.views.TextBox
-          model: model
-      when 'photo'
-        view = new document.gignal.views.PhotoBox
-          model: model
+    view = new document.gignal.views.UniBox
+      model: model
     document.gignal.widget.$el.isotope 'insert', view.render().$el
     document.gignal.widget.refresh()
 
@@ -120,5 +124,5 @@ class Stream extends Backbone.Collection
     sleep = 30000
     setInterval ->
       document.gignal.stream.each (model) ->
-        model.set 'since', humaneDate(model.get('creation'))
+        model.set 'since', humaneDate(model.get('created_local'))
     , sleep

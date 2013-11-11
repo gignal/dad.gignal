@@ -1,4 +1,4 @@
-var Post, Stream, getParameterByName, _ref, _ref1, _ref2, _ref3, _ref4,
+var Post, Stream, getParameterByName, _ref, _ref1, _ref2, _ref3,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -8,6 +8,8 @@ document.gignal = {
 };
 
 Post = (function(_super) {
+  var offset;
+
   __extends(Post, _super);
 
   function Post() {
@@ -20,8 +22,10 @@ Post = (function(_super) {
 
   Post.prototype.re_links = /((http|https)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?)/g;
 
+  offset = ((new Date()).getTimezoneOffset() * 60) - 3600;
+
   Post.prototype.getData = function() {
-    var data, direct, text, username;
+    var created, created_local, data, direct, text, username;
     text = this.get('text');
     text = text.replace(this.re_links, '<a href="$1" target="_blank">link</a>');
     if (text.indexOf(' ') === -1) {
@@ -41,14 +45,17 @@ Post = (function(_super) {
       default:
         direct = '#';
     }
+    created = (new Date(this.get('created'))).getTime() / 1000;
+    created_local = offset >= 0 ? created - offset : created_local = created + offset;
+    this.set('created_local', new Date(created_local * 1000));
     data = {
       message: text,
       username: username,
       name: this.get('name'),
-      since: humaneDate(this.get('creation')),
+      since: humaneDate(this.get('created_local')),
       service: this.get('service'),
       user_image: this.get('user_image'),
-      photo: this.get('large_photo'),
+      photo: this.get('large_photo') !== '' ? this.get('large_photo') : false,
       direct: direct
     };
     return data;
@@ -76,7 +83,7 @@ Stream = (function(_super) {
     if (getParameterByName('eventid')) {
       eventid = getParameterByName('eventid');
     }
-    return '//api.gignal.com/fetch/' + eventid + '?callback=?';
+    return '//127.0.0.1:3000/fetch/' + eventid + '?callback=?';
   };
 
   Stream.prototype.calling = false;
@@ -96,17 +103,9 @@ Stream = (function(_super) {
 
   Stream.prototype.inset = function(model) {
     var view;
-    switch (model.get('type')) {
-      case 'text':
-        view = new document.gignal.views.TextBox({
-          model: model
-        });
-        break;
-      case 'photo':
-        view = new document.gignal.views.PhotoBox({
-          model: model
-        });
-    }
+    view = new document.gignal.views.UniBox({
+      model: model
+    });
     document.gignal.widget.$el.isotope('insert', view.render().$el);
     return document.gignal.widget.refresh();
   };
@@ -184,7 +183,7 @@ Stream = (function(_super) {
     sleep = 30000;
     return setInterval(function() {
       return document.gignal.stream.each(function(model) {
-        return model.set('since', humaneDate(model.get('creation')));
+        return model.set('since', humaneDate(model.get('created_local')));
       });
     }, sleep);
   };
@@ -213,7 +212,8 @@ document.gignal.views.Event = (function(_super) {
     sortBy: 'saved_on',
     getSortData: {
       saved_on: function(el) {
-        return parseInt(el.data('saved_on'), 10);
+        console.log(parseInt(el.data('saved_on')));
+        return parseInt(el.data('saved_on'));
       }
     }
   };
@@ -239,104 +239,36 @@ document.gignal.views.Event = (function(_super) {
 
 })(Backbone.View);
 
-document.gignal.views.TextBox = (function(_super) {
-  __extends(TextBox, _super);
+document.gignal.views.UniBox = (function(_super) {
+  __extends(UniBox, _super);
 
-  function TextBox() {
+  function UniBox() {
     this.render = __bind(this.render, this);
-    _ref3 = TextBox.__super__.constructor.apply(this, arguments);
+    _ref3 = UniBox.__super__.constructor.apply(this, arguments);
     return _ref3;
   }
 
-  TextBox.prototype.tagName = 'div';
+  UniBox.prototype.tagName = 'div';
 
-  TextBox.prototype.className = 'gignal-outerbox';
+  UniBox.prototype.className = 'gignal-outerbox';
 
-  TextBox.prototype.initialize = function() {
+  UniBox.prototype.initialize = function() {
     return this.listenTo(this.model, 'change', this.render);
   };
 
-  TextBox.prototype.render = function() {
-    var data;
+  UniBox.prototype.render = function() {
     this.$el.data('saved_on', this.model.get('saved_on'));
     this.$el.css('width', document.gignal.widget.columnWidth);
     if (this.model.get('admin_entry')) {
       this.$el.addClass('gignal-owner');
     }
-    data = this.model.getData();
-    if (!data.message) {
-      document.gignal.widget.$el.isotope('remove', this.$el);
-    }
-    this.$el.html(Templates.post.render(data, {
+    this.$el.html(Templates.uni.render(this.model.getData(), {
       footer: Templates.footer
     }));
     return this;
   };
 
-  return TextBox;
-
-})(Backbone.View);
-
-document.gignal.views.PhotoBox = (function(_super) {
-  __extends(PhotoBox, _super);
-
-  function PhotoBox() {
-    this.linksta = __bind(this.linksta, this);
-    this.render = __bind(this.render, this);
-    _ref4 = PhotoBox.__super__.constructor.apply(this, arguments);
-    return _ref4;
-  }
-
-  PhotoBox.prototype.tagName = 'div';
-
-  PhotoBox.prototype.className = 'gignal-outerbox';
-
-  PhotoBox.prototype.events = {
-    'click a.direct': 'linksta'
-  };
-
-  PhotoBox.prototype.initialize = function() {
-    var img,
-      _this = this;
-    this.listenTo(this.model, 'change', this.render);
-    img = new Image();
-    img.src = this.model.get('large_photo');
-    return img.onerror = function() {
-      return document.gignal.widget.$el.isotope('remove', _this.$el);
-    };
-  };
-
-  PhotoBox.prototype.render = function() {
-    var data;
-    this.$el.data('saved_on', this.model.get('saved_on'));
-    this.$el.css('width', document.gignal.widget.columnWidth);
-    if (this.model.get('admin_entry')) {
-      this.$el.addClass('gignal-owner');
-    }
-    data = this.model.getData();
-    if (!data.photo) {
-      document.gignal.widget.$el.isotope('remove', this.$el);
-      return;
-    }
-    this.$el.html(Templates.photo.render(this.model.getData(), {
-      footer: Templates.footer
-    }));
-    return this;
-  };
-
-  PhotoBox.prototype.linksta = function(event) {
-    var _this = this;
-    if (this.model.get('service') === 'Instagram') {
-      event.preventDefault();
-      return $.getJSON('https://api.instagram.com/v1/media/' + this.model.get('original_id') + '?client_id=3ebcc844a6df41169c1955e0f75d6fce&callback=?').done(function(response) {
-        if (response.data != null) {
-          return window.open(response.data.link, '_blank');
-        }
-      });
-    }
-  };
-
-  return PhotoBox;
+  return UniBox;
 
 })(Backbone.View);
 
@@ -365,3 +297,7 @@ jQuery(function($) {
     return document.gignal.stream.update(true);
   });
 });
+
+/*
+//@ sourceMappingURL=app.js.map
+*/
