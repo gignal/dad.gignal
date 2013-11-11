@@ -83,7 +83,7 @@ Stream = (function(_super) {
     if (getParameterByName('eventid')) {
       eventid = getParameterByName('eventid');
     }
-    return '//127.0.0.1:3000/fetch/' + eventid + '?callback=?';
+    return '//api.gignal.com/fetch/' + eventid + '?callback=?';
   };
 
   Stream.prototype.calling = false;
@@ -212,7 +212,6 @@ document.gignal.views.Event = (function(_super) {
     sortBy: 'saved_on',
     getSortData: {
       saved_on: function(el) {
-        console.log(parseInt(el.data('saved_on')));
         return parseInt(el.data('saved_on'));
       }
     }
