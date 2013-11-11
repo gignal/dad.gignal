@@ -5,6 +5,9 @@ body{margin:0;padding:0}
 #gignal-stream header a,#gignal-stream header img{border:none}
 #gignal-stream .sm{padding-top:5px;}
 #gignal-stream .sm img{width:47px;height:47px;margin-left:5px}
+#gignal-stream #gignal-footer{position:fixed;right:-55px;bottom:80px;z-index:9999;-webkit-transform:rotate(-90deg);-moz-transform:rotate(-90deg);-o-transform:rotate(-90deg);-ms-transform:rotate(-90deg);transform:rotate(-90deg);}
+#gignal-stream #gignal-footer .flap{position:relative;background-color:#000;opacity:.75;width:84px;height:100px;margin:0 auto;}
+#gignal-stream #gignal-footer .flap img{position:relative;top:8px;height:23px;display:block;margin:0 auto;border:none}
 .isotope-item{z-index:2}
 .isotope-hidden.isotope-item{pointer-events:none;z-index:1}
 .isotope,.isotope .isotope-item{-webkit-transition-duration:.8s;-moz-transition-duration:.8s;-ms-transition-duration:.8s;-o-transition-duration:.8s;transition-duration:.8s}
@@ -20,21 +23,17 @@ body{margin:0;padding:0}
 #gignal-stream #gignal-widget .gignal-outerbox a{color:#666;text-decoration:none;}
 #gignal-stream #gignal-widget .gignal-outerbox a:hover{text-decoration:underline}
 #gignal-stream #gignal-widget .gignal-outerbox img{border:none}
-#gignal-stream #gignal-widget .gignal-outerbox .gignal-text{position:relative;padding:10px;word-wrap:break-word;max-height:200px;overflow:hidden;color:#333;text-align:center;}
-#gignal-stream #gignal-widget .gignal-outerbox .gignal-text .message{font-family:Georgia,Arial,sans-serif}
 #gignal-stream #gignal-widget .gignal-outerbox hr{border:0;height:1px;background:#fff;margin-bottom:0}
+#gignal-stream #gignal-widget .gignal-outerbox .gignal-unibox{position:relative;padding:10px;word-wrap:break-word;overflow:hidden;color:#333;text-align:center;}
+#gignal-stream #gignal-widget .gignal-outerbox .gignal-unibox .gignal-image{height:185px;background-size:cover;background-image:url("../gignal/images/Gignal-G.png")}
+#gignal-stream #gignal-widget .gignal-outerbox .gignal-unibox .message{font-family:Georgia,Arial,sans-serif;max-height:200px}
+#gignal-stream #gignal-widget .gignal-outerbox .gignal-unibox .gignal-box-footer{margin-top:145px}
 #gignal-stream #gignal-widget .gignal-outerbox .gignal-box-footer{position:relative;height:48px;word-wrap:break-word;overflow:hidden;padding:10px;padding-top:0;line-height:16px;font-size:12px;font-weight:normal;color:#333;}
 #gignal-stream #gignal-widget .gignal-outerbox .gignal-box-footer img{margin-right:5px}
 #gignal-stream #gignal-widget .gignal-outerbox .gignal-box-footer .gignal-avatar{max-width:48px;max-height:48px}
 #gignal-stream #gignal-widget .gignal-outerbox .gignal-box-footer .gignal-service{width:18px;height:18px;margin-right:0;position:absolute;right:0;bottom:0;opacity:.5}
 #gignal-stream #gignal-widget .gignal-owner{background-color:#fff;-webkit-box-shadow:none;-moz-box-shadow:none;box-shadow:none;}
-#gignal-stream #gignal-widget .gignal-owner .gignal-text{color:#fff}
-#gignal-stream #gignal-widget .gignal-owner a{color:#eee}
-#gignal-stream #gignal-widget .gignal-owner hr{background:#fff}
+#gignal-stream #gignal-widget .gignal-owner .gignal-text{color:#333}
+#gignal-stream #gignal-widget .gignal-owner a{color:#666}
 #gignal-stream #gignal-widget .gignal-owner .gignal-box-footer{color:#333}
 #gignal-stream #gignal-widget .gignal-owner .gignal-service{display:none}
-#gignal-stream #gignal-widget .gignal-imagebox{position:relative;padding:10px;word-wrap:break-word;overflow:hidden;color:#fff;text-align:center;}
-#gignal-stream #gignal-widget .gignal-imagebox .gignal-image{height:185px;background-size:cover;background-image:url("../gignal/images/Gignal-G.png")}
-#gignal-stream #gignal-footer{position:fixed;right:-55px;bottom:80px;z-index:9999;-webkit-transform:rotate(-90deg);-moz-transform:rotate(-90deg);-o-transform:rotate(-90deg);-ms-transform:rotate(-90deg);transform:rotate(-90deg);}
-#gignal-stream #gignal-footer .flap{position:relative;background-color:#000;opacity:.75;width:84px;height:100px;margin:0 auto;}
-#gignal-stream #gignal-footer .flap img{position:relative;top:8px;height:23px;display:block;margin:0 auto;border:none}
