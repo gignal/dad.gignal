@@ -22,8 +22,9 @@ class Post extends Backbone.Model
       else
         direct = '#'
     # convert time to local tz
-    created = (new Date(@get('created'))).getTime() / 1000
-    created_local = if offset >= 0 then created - offset else created_local = created + offset
+    # created = (new Date(@get('created'))).getTime() / 1000
+    created = @get 'created_on'
+    created_local = if offset >= 0 then created - offset else created + offset
     @set 'created_local', new Date(created_local * 1000)
     # prepare data
     data =
@@ -47,8 +48,9 @@ class Stream extends Backbone.Collection
     eventid = $('#gignal-widget').data('eventid')
     if getParameterByName 'eventid'
       eventid = getParameterByName 'eventid'
-    return '//api.gignal.com/fetch/' + eventid + '?callback=?'
+    #return '//api.gignal.com/fetch/' + eventid + '?callback=?'
     #return '//127.0.0.1:3000/fetch/' + eventid + '?callback=?'
+    return '//gignal.parseapp.com/feed/' + eventid + '?callback=?'
     
 
   calling: false
@@ -74,7 +76,7 @@ class Stream extends Backbone.Collection
     return response.stream
 
   comparator: (item) ->
-    return - item.get 'saved_on'
+    return - item.get 'created_on'
 
   isScrolledIntoView: (elem) ->
     docViewTop = $(window).scrollTop()

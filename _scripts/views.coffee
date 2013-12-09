@@ -6,10 +6,10 @@ class document.gignal.views.Event extends Backbone.View
     itemSelector: '.gignal-outerbox'
     layoutMode: 'masonry'
     sortAscending: false
-    sortBy: 'saved_on'
+    sortBy: 'created_on'
     getSortData:
-      saved_on: (el) ->
-        parseInt(el.data('saved_on'))
+      created_on: (el) ->
+        parseInt(el.data('created_on'))
 
   initialize: ->
     # set Isotope masonry columnWidth
@@ -32,7 +32,7 @@ class document.gignal.views.UniBox extends Backbone.View
   initialize: ->
     @listenTo @model, 'change', @render
   render: =>
-    @$el.data 'saved_on', @model.get('saved_on')
+    @$el.data 'created_on', @model.get('created_on')
     # set width
     @$el.css 'width', document.gignal.widget.columnWidth
     # owner?

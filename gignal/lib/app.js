@@ -45,8 +45,8 @@ Post = (function(_super) {
       default:
         direct = '#';
     }
-    created = (new Date(this.get('created'))).getTime() / 1000;
-    created_local = offset >= 0 ? created - offset : created_local = created + offset;
+    created = this.get('created_on');
+    created_local = offset >= 0 ? created - offset : created + offset;
     this.set('created_local', new Date(created_local * 1000));
     data = {
       message: text,
@@ -83,7 +83,7 @@ Stream = (function(_super) {
     if (getParameterByName('eventid')) {
       eventid = getParameterByName('eventid');
     }
-    return '//api.gignal.com/fetch/' + eventid + '?callback=?';
+    return '//gignal.parseapp.com/feed/' + eventid + '?callback=?';
   };
 
   Stream.prototype.calling = false;
@@ -115,7 +115,7 @@ Stream = (function(_super) {
   };
 
   Stream.prototype.comparator = function(item) {
-    return -item.get('saved_on');
+    return -item.get('created_on');
   };
 
   Stream.prototype.isScrolledIntoView = function(elem) {
@@ -209,10 +209,10 @@ document.gignal.views.Event = (function(_super) {
     itemSelector: '.gignal-outerbox',
     layoutMode: 'masonry',
     sortAscending: false,
-    sortBy: 'saved_on',
+    sortBy: 'created_on',
     getSortData: {
-      saved_on: function(el) {
-        return parseInt(el.data('saved_on'));
+      created_on: function(el) {
+        return parseInt(el.data('created_on'));
       }
     }
   };
@@ -256,7 +256,7 @@ document.gignal.views.UniBox = (function(_super) {
   };
 
   UniBox.prototype.render = function() {
-    this.$el.data('saved_on', this.model.get('saved_on'));
+    this.$el.data('created_on', this.model.get('created_on'));
     this.$el.css('width', document.gignal.widget.columnWidth);
     if (this.model.get('admin_entry')) {
       this.$el.addClass('gignal-owner');

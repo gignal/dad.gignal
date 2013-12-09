@@ -22,8 +22,9 @@ class Post extends Backbone.Model
       else
         direct = '#'
     # convert time to local tz
-    created = (new Date(@get('created'))).getTime() / 1000
-    created_local = if offset >= 0 then created - offset else created_local = created + offset
+    # created = (new Date(@get('created'))).getTime() / 1000
+    created = @get 'created_on'
+    created_local = if offset >= 0 then created - offset else created + offset
     @set 'created_local', new Date(created_local * 1000)
     # prepare data
     data =
@@ -47,8 +48,9 @@ class Stream extends Backbone.Collection
     eventid = $('#gignal-widget').data('eventid')
     if getParameterByName 'eventid'
       eventid = getParameterByName 'eventid'
-    return '//api.gignal.com/fetch/' + eventid + '?callback=?'
+    #return '//api.gignal.com/fetch/' + eventid + '?callback=?'
     #return '//127.0.0.1:3000/fetch/' + eventid + '?callback=?'
+    return '//gignal.parseapp.com/feed/' + eventid + '?callback=?'
     
 
   calling: false
@@ -74,7 +76,7 @@ class Stream extends Backbone.Collection
     return response.stream
 
   comparator: (item) ->
-    return - item.get 'saved_on'
+    return - item.get 'created_on'
 
   isScrolledIntoView: (elem) ->
     docViewTop = $(window).scrollTop()
@@ -135,10 +137,10 @@ class document.gignal.views.Event extends Backbone.View
     itemSelector: '.gignal-outerbox'
     layoutMode: 'masonry'
     sortAscending: false
-    sortBy: 'saved_on'
+    sortBy: 'created_on'
     getSortData:
-      saved_on: (el) ->
-        parseInt(el.data('saved_on'))
+      created_on: (el) ->
+        parseInt(el.data('created_on'))
 
   initialize: ->
     # set Isotope masonry columnWidth
@@ -161,7 +163,7 @@ class document.gignal.views.UniBox extends Backbone.View
   initialize: ->
     @listenTo @model, 'change', @render
   render: =>
-    @$el.data 'saved_on', @model.get('saved_on')
+    @$el.data 'created_on', @model.get('created_on')
     # set width
     @$el.css 'width', document.gignal.widget.columnWidth
     # owner?
