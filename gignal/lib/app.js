@@ -1,4 +1,4 @@
-var Post, Stream, getParameterByName, _ref, _ref1, _ref2, _ref3,
+var Post, Stream, getParameterByName, getUrl, _ref, _ref1, _ref2, _ref3,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -25,7 +25,7 @@ Post = (function(_super) {
   offset = ((new Date()).getTimezoneOffset() * 60) - 3600;
 
   Post.prototype.getData = function() {
-    var created, created_local, data, direct, text, username;
+    var created, created_local, data, direct, shareFB, text, username;
     text = this.get('text');
     text = text.replace(this.re_links, '<a href="$1" target="_blank">link</a>');
     if (text.indexOf(' ') === -1) {
@@ -42,9 +42,13 @@ Post = (function(_super) {
       case 'Facebook':
         direct = 'http://facebook.com/' + this.get('original_id');
         break;
+      case 'Instagram':
+        direct = 'http://instagram.com/p/' + this.get('original_id');
+        break;
       default:
         direct = '#';
     }
+    shareFB = 'http://www.facebook.com/sharer.php?u=' + encodeURIComponent(direct);
     created = this.get('created_on');
     created_local = offset >= 0 ? created - offset : created + offset;
     this.set('created_local', new Date(created_local * 1000));
@@ -53,10 +57,12 @@ Post = (function(_super) {
       username: username,
       name: this.get('name'),
       since: humaneDate(this.get('created_local')),
+      link: direct,
       service: this.get('service'),
       user_image: this.get('user_image'),
       photo: this.get('large_photo') !== '' ? this.get('large_photo') : false,
-      direct: direct
+      direct: direct,
+      shareFB: shareFB
     };
     return data;
   };
@@ -83,7 +89,7 @@ Stream = (function(_super) {
     if (getParameterByName('eventid')) {
       eventid = getParameterByName('eventid');
     }
-    return '//gignal.parseapp.com/feed/' + eventid + '?callback=?';
+    return '//api.gignal.com/fetch/' + eventid + '?callback=?';
   };
 
   Stream.prototype.calling = false;
@@ -283,6 +289,10 @@ getParameterByName = function(name) {
   }
 };
 
+getUrl = function(url) {
+  return window.open(url, "feedDialog", "toolbar=0,status=0,width=626,height=370");
+};
+
 jQuery(function($) {
   $.ajaxSetup({
     cache: true
@@ -295,6 +305,10 @@ jQuery(function($) {
   }, function() {
     return document.gignal.stream.update(true);
   });
+});
+
+jQuery(document).ready(function() {
+  return console.log($("#gignal-stream").find('.gignal-outerbox'));
 });
 
 /*

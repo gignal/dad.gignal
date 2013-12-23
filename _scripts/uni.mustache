@@ -8,3 +8,36 @@
 </div>
 
 {{> footer}}
+
+<div class="gignal-toolbox">
+	<span class="gignal-service {{service}}">
+		<a href="{{link}}">
+			<!--<img src="./gignal/images/{{service}}.png" class="gignal-service" />-->
+			<p>{{service}}</p>
+		</a>
+	</span>
+	<span class="gignal-tool">
+		<ul>
+			<li class="like" style="background-image: url('/gignal/images/sprite-social.png');">
+				<!--<div>
+					<iframe src="http://www.facebook.com/plugins/like.php?href={{link}}&amp;layout=button_count&amp;show_faces=false&amp;width=450&amp;action=like&amp;colorscheme=light" scrolling="no" frameborder="0" allowTransparency="true" style="border:none; overflow:hidden; width:450px; height:60px;"></iframe>
+				</div>
+				<p></p>-->
+			</li>
+			<li class="retweet" style="background-image: url('/gignal/images/sprite-social.png');">
+				<!--<div></div>-->
+			</li>
+			<li class="reply" style="background-image: url('/gignal/images/sprite-social.png');">
+				<!--<div></div>-->
+			</li>
+			<li class="post" style="background-image: url('/gignal/images/sprite-social.png');">
+				<!--<div></div>-->
+			</li>
+			<li class="share" style="background-image: url('/gignal/images/sprite-social.png');">
+				<!--<div>
+					<a href="{{shareFB}}">share</a>
+				</div>-->
+			</li>
+		</ul>
+	</span>
+</div>

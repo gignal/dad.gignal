@@ -17,10 +17,16 @@ class Post extends Backbone.Model
     switch @get 'service'
       when 'Twitter'
         direct = 'http://twitter.com/' + username + '/status/' + @get 'original_id'
+        #direct = 'https://twitter.com/intent/retweet?tweet_id=' + @get 'original_id'
       when 'Facebook'
         direct = 'http://facebook.com/' + @get 'original_id'
+        #direct = "javascript: getUrl(\"https://www.facebook.com/dialog/feed?app_id=&display=popup&link=" + encodeURIComponent() + "&picture=" + encodeURIComponent() + "&name=" + encodeURIComponent() + "&description=" + encodeURIComponent() + "&redirect_uri=" + encodeURIComponent() + "\")"
+      when 'Instagram'
+        direct = 'http://instagram.com/p/' + @get 'original_id'
       else
         direct = '#'
+
+    shareFB = 'http://www.facebook.com/sharer.php?u=' + encodeURIComponent(direct)
     # convert time to local tz
     # created = (new Date(@get('created'))).getTime() / 1000
     created = @get 'created_on'
@@ -32,10 +38,12 @@ class Post extends Backbone.Model
       username: username
       name: @get 'name'
       since: humaneDate @get('created_local')
+      link: direct
       service: @get 'service'
       user_image: @get 'user_image'
       photo: if @get('large_photo') isnt '' then @get('large_photo') else false
       direct: direct
+      shareFB : shareFB
     return data
 
 
@@ -48,9 +56,9 @@ class Stream extends Backbone.Collection
     eventid = $('#gignal-widget').data('eventid')
     if getParameterByName 'eventid'
       eventid = getParameterByName 'eventid'
-    #return '//api.gignal.com/fetch/' + eventid + '?callback=?'
+    return '//api.gignal.com/fetch/' + eventid + '?callback=?'
     #return '//127.0.0.1:3000/fetch/' + eventid + '?callback=?'
-    return '//gignal.parseapp.com/feed/' + eventid + '?callback=?'
+    #return '//gignal.parseapp.com/feed/' + eventid + '?callback=?'
     
 
   calling: false
