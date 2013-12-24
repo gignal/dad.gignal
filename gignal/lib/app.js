@@ -1,4 +1,4 @@
-var Post, Stream, getParameterByName, getUrl, _ref, _ref1, _ref2, _ref3,
+var Post, Stream, barOut, barOver, getParameterByName, getUrl, myBirdOut, myBirdOver, myFaceOut, myFaceOver, _ref, _ref1, _ref2, _ref3,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -25,7 +25,7 @@ Post = (function(_super) {
   offset = ((new Date()).getTimezoneOffset() * 60) - 3600;
 
   Post.prototype.getData = function() {
-    var created, created_local, data, direct, shareFB, text, username;
+    var Facebook, Instagram, Twitter, created, created_local, data, direct, keyFB, postFB, shareFB, shareTT, text, username;
     text = this.get('text');
     text = text.replace(this.re_links, '<a href="$1" target="_blank">link</a>');
     if (text.indexOf(' ') === -1) {
@@ -38,17 +38,23 @@ Post = (function(_super) {
     switch (this.get('service')) {
       case 'Twitter':
         direct = 'http://twitter.com/' + username + '/status/' + this.get('original_id');
+        Twitter = this.get('original_id');
         break;
       case 'Facebook':
         direct = 'http://facebook.com/' + this.get('original_id');
+        Facebook = this.get('original_id');
         break;
       case 'Instagram':
         direct = 'http://instagram.com/p/' + this.get('original_id');
+        Instagram = this.get('original_id');
         break;
       default:
         direct = '#';
     }
-    shareFB = 'http://www.facebook.com/sharer.php?u=' + encodeURIComponent(direct);
+    shareFB = "javascript: getUrl(\"http://www.facebook.com/sharer.php?u=" + encodeURIComponent(direct) + "\")";
+    shareTT = "javascript: getUrl(\"http://twitter.com/share?text=" + encodeURIComponent(direct) + "&url=" + encodeURIComponent(text) + "\")";
+    keyFB = '192071307648123';
+    postFB = "javascript: getUrl(\"https://www.facebook.com/dialog/feed?app_id=" + keyFB + "&display=popup&link=" + encodeURIComponent(direct) + "&picture=" + encodeURIComponent('http://gignal.com/images/logo-big.png') + "&name=" + encodeURIComponent('Gignal') + "&description=" + encodeURIComponent('Social network only for you') + "&redirect_uri=" + encodeURIComponent('http://gignal.com') + "\")";
     created = this.get('created_on');
     created_local = offset >= 0 ? created - offset : created + offset;
     this.set('created_local', new Date(created_local * 1000));
@@ -62,7 +68,12 @@ Post = (function(_super) {
       user_image: this.get('user_image'),
       photo: this.get('large_photo') !== '' ? this.get('large_photo') : false,
       direct: direct,
-      shareFB: shareFB
+      shareFB: shareFB,
+      shareTT: shareTT,
+      postFB: postFB,
+      Twitter: Twitter,
+      Facebook: Facebook,
+      Instagram: Instagram
     };
     return data;
   };
@@ -293,6 +304,32 @@ getUrl = function(url) {
   return window.open(url, "feedDialog", "toolbar=0,status=0,width=626,height=370");
 };
 
+myBirdOver = function(the) {
+  return the.style.backgroundImage = "url('/gignal/images/twitter_blue.png')";
+};
+
+myBirdOut = function(the) {
+  return the.style.backgroundImage = "url('/gignal/images/twitter_gray.png')";
+};
+
+myFaceOver = function(the) {
+  return the.style.backgroundImage = "url('/gignal/images/facebook_blue.png')";
+};
+
+myFaceOut = function(the) {
+  return the.style.backgroundImage = "url('/gignal/images/facebook_gray.png')";
+};
+
+barOver = function(the) {
+  the.children[0].style.display = "block";
+  return the.children[1].style.display = "block";
+};
+
+barOut = function(the) {
+  the.children[0].style.display = "none";
+  return the.children[1].style.display = "none";
+};
+
 jQuery(function($) {
   $.ajaxSetup({
     cache: true
@@ -305,10 +342,6 @@ jQuery(function($) {
   }, function() {
     return document.gignal.stream.update(true);
   });
-});
-
-jQuery(document).ready(function() {
-  return console.log($("#gignal-stream").find('.gignal-outerbox'));
 });
 
 /*

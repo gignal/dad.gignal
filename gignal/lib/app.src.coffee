@@ -17,16 +17,21 @@ class Post extends Backbone.Model
     switch @get 'service'
       when 'Twitter'
         direct = 'http://twitter.com/' + username + '/status/' + @get 'original_id'
-        #direct = 'https://twitter.com/intent/retweet?tweet_id=' + @get 'original_id'
+        Twitter = @get 'original_id'
       when 'Facebook'
         direct = 'http://facebook.com/' + @get 'original_id'
-        #direct = "javascript: getUrl(\"https://www.facebook.com/dialog/feed?app_id=&display=popup&link=" + encodeURIComponent() + "&picture=" + encodeURIComponent() + "&name=" + encodeURIComponent() + "&description=" + encodeURIComponent() + "&redirect_uri=" + encodeURIComponent() + "\")"
+        Facebook = @get 'original_id'
       when 'Instagram'
         direct = 'http://instagram.com/p/' + @get 'original_id'
+        Instagram = @get 'original_id'
       else
         direct = '#'
 
-    shareFB = 'http://www.facebook.com/sharer.php?u=' + encodeURIComponent(direct)
+    shareFB = "javascript: getUrl(\"http://www.facebook.com/sharer.php?u=" + encodeURIComponent(direct) + "\")"
+    shareTT = "javascript: getUrl(\"http://twitter.com/share?text=" + encodeURIComponent(direct) + "&url="+ encodeURIComponent(text) + "\")"
+    
+    keyFB = '192071307648123'
+    postFB = "javascript: getUrl(\"https://www.facebook.com/dialog/feed?app_id="+keyFB+"&display=popup&link=" + encodeURIComponent(direct) + "&picture=" + encodeURIComponent('http://gignal.com/images/logo-big.png') + "&name=" + encodeURIComponent('Gignal') + "&description=" + encodeURIComponent('Social network only for you') + "&redirect_uri=" + encodeURIComponent('http://gignal.com') + "\")"
     # convert time to local tz
     # created = (new Date(@get('created'))).getTime() / 1000
     created = @get 'created_on'
@@ -44,6 +49,11 @@ class Post extends Backbone.Model
       photo: if @get('large_photo') isnt '' then @get('large_photo') else false
       direct: direct
       shareFB : shareFB
+      shareTT : shareTT
+      postFB : postFB
+      Twitter : Twitter
+      Facebook : Facebook
+      Instagram : Instagram
     return data
 
 
@@ -191,6 +201,26 @@ getParameterByName = (name) ->
 getUrl = (url) ->
   window.open url, "feedDialog", "toolbar=0,status=0,width=626,height=370"
 
+myBirdOver = (the) ->
+  the.style.backgroundImage="url('/gignal/images/twitter_blue.png')"
+
+myBirdOut = (the) ->
+  the.style.backgroundImage="url('/gignal/images/twitter_gray.png')"
+
+myFaceOver = (the) ->
+  the.style.backgroundImage="url('/gignal/images/facebook_blue.png')"
+
+myFaceOut = (the) ->
+  the.style.backgroundImage="url('/gignal/images/facebook_gray.png')"
+
+barOver = (the) ->
+  the.children[0].style.display = "block"
+  the.children[1].style.display = "block"
+
+barOut = (the) ->
+  the.children[0].style.display = "none"
+  the.children[1].style.display = "none"
+
 jQuery ($) ->
 
   $.ajaxSetup
@@ -203,21 +233,3 @@ jQuery ($) ->
 
   $(window).on 'scrollBottom', offsetY: -100, ->
     document.gignal.stream.update true
-
-
-jQuery(document).ready ->
-
-  #$("#gignal-stream").find('.gignal-tool')#.click ->
-  console.log $("#gignal-stream").find('.gignal-outerbox')
-
-  # .hover ->
-  #   $(this).children('div').css "display", "block"
-  #   console.log 'ok'
-  # , ->
-  #   $(this).children('div').css "display", "none"
-
-  # $.ajaxSetup cache: true
-  # $.getScript "//connect.facebook.net/en_UK/all.js", ->
-  #   FB.init appId: "YOUR_APP_ID"
-  #   $("#loginbutton,#feedbutton").removeAttr "disabled"
-  #   FB.getLoginStatus updateStatusCallback

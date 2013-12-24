@@ -7,6 +7,26 @@ getParameterByName = (name) ->
 getUrl = (url) ->
   window.open url, "feedDialog", "toolbar=0,status=0,width=626,height=370"
 
+myBirdOver = (the) ->
+  the.style.backgroundImage="url('/gignal/images/twitter_blue.png')"
+
+myBirdOut = (the) ->
+  the.style.backgroundImage="url('/gignal/images/twitter_gray.png')"
+
+myFaceOver = (the) ->
+  the.style.backgroundImage="url('/gignal/images/facebook_blue.png')"
+
+myFaceOut = (the) ->
+  the.style.backgroundImage="url('/gignal/images/facebook_gray.png')"
+
+barOver = (the) ->
+  the.children[0].style.display = "block"
+  the.children[1].style.display = "block"
+
+barOut = (the) ->
+  the.children[0].style.display = "none"
+  the.children[1].style.display = "none"
+
 jQuery ($) ->
 
   $.ajaxSetup
@@ -19,21 +39,3 @@ jQuery ($) ->
 
   $(window).on 'scrollBottom', offsetY: -100, ->
     document.gignal.stream.update true
-
-
-jQuery(document).ready ->
-
-  #$("#gignal-stream").find('.gignal-tool')#.click ->
-  console.log $("#gignal-stream").find('.gignal-outerbox')
-
-  # .hover ->
-  #   $(this).children('div').css "display", "block"
-  #   console.log 'ok'
-  # , ->
-  #   $(this).children('div').css "display", "none"
-
-  # $.ajaxSetup cache: true
-  # $.getScript "//connect.facebook.net/en_UK/all.js", ->
-  #   FB.init appId: "YOUR_APP_ID"
-  #   $("#loginbutton,#feedbutton").removeAttr "disabled"
-  #   FB.getLoginStatus updateStatusCallback
