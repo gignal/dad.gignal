@@ -305,19 +305,19 @@ getUrl = function(url) {
 };
 
 myBirdOver = function(the) {
-  return the.style.backgroundImage = "url('/gignal/images/twitter_blue.png')";
+  return the.style.backgroundImage = "url('gignal/images/twitter_blue.png')";
 };
 
 myBirdOut = function(the) {
-  return the.style.backgroundImage = "url('/gignal/images/twitter_gray.png')";
+  return the.style.backgroundImage = "url('gignal/images/twitter_gray.png')";
 };
 
 myFaceOver = function(the) {
-  return the.style.backgroundImage = "url('/gignal/images/facebook_blue.png')";
+  return the.style.backgroundImage = "url('gignal/images/facebook_blue.png')";
 };
 
 myFaceOut = function(the) {
-  return the.style.backgroundImage = "url('/gignal/images/facebook_gray.png')";
+  return the.style.backgroundImage = "url('gignal/images/facebook_gray.png')";
 };
 
 barOver = function(the) {
