@@ -17,13 +17,25 @@ class Post extends Backbone.Model
     switch @get 'service'
       when 'Twitter'
         direct = 'http://twitter.com/' + username + '/status/' + @get 'original_id'
+        Twitter = @get 'original_id'
       when 'Facebook'
         direct = 'http://facebook.com/' + @get 'original_id'
+        Facebook = @get 'original_id'
+      when 'Instagram'
+        direct = 'http://instagram.com/p/' + @get 'original_id'
+        Instagram = @get 'original_id'
       else
         direct = '#'
+
+    shareFB = "javascript: getUrl(\"http://www.facebook.com/sharer.php?u=" + encodeURIComponent(direct) + "\")"
+    shareTT = "javascript: getUrl(\"http://twitter.com/share?text=" + encodeURIComponent(direct) + "&url="+ encodeURIComponent(text) + "\")"
+    
+    keyFB = '192071307648123'
+    postFB = "javascript: getUrl(\"https://www.facebook.com/dialog/feed?app_id="+keyFB+"&display=popup&link=" + encodeURIComponent(direct) + "&picture=" + encodeURIComponent('http://gignal.com/images/logo-big.png') + "&name=" + encodeURIComponent('Gignal') + "&description=" + encodeURIComponent('Social network only for you') + "&redirect_uri=" + encodeURIComponent('http://gignal.com') + "\")"
     # convert time to local tz
-    created = (new Date(@get('created'))).getTime() / 1000
-    created_local = if offset >= 0 then created - offset else created_local = created + offset
+    # created = (new Date(@get('created'))).getTime() / 1000
+    created = @get 'created_on'
+    created_local = if offset >= 0 then created - offset else created + offset
     @set 'created_local', new Date(created_local * 1000)
     # prepare data
     data =
@@ -31,10 +43,17 @@ class Post extends Backbone.Model
       username: username
       name: @get 'name'
       since: humaneDate @get('created_local')
+      link: direct
       service: @get 'service'
       user_image: @get 'user_image'
       photo: if @get('large_photo') isnt '' then @get('large_photo') else false
       direct: direct
+      shareFB : shareFB
+      shareTT : shareTT
+      postFB : postFB
+      Twitter : Twitter
+      Facebook : Facebook
+      Instagram : Instagram
     return data
 
 
@@ -49,6 +68,7 @@ class Stream extends Backbone.Collection
       eventid = getParameterByName 'eventid'
     return '//api.gignal.com/fetch/' + eventid + '?callback=?'
     #return '//127.0.0.1:3000/fetch/' + eventid + '?callback=?'
+    #return '//gignal.parseapp.com/feed/' + eventid + '?callback=?'
     
 
   calling: false
@@ -74,7 +94,7 @@ class Stream extends Backbone.Collection
     return response.stream
 
   comparator: (item) ->
-    return - item.get 'saved_on'
+    return - item.get 'created_on'
 
   isScrolledIntoView: (elem) ->
     docViewTop = $(window).scrollTop()
@@ -135,10 +155,10 @@ class document.gignal.views.Event extends Backbone.View
     itemSelector: '.gignal-outerbox'
     layoutMode: 'masonry'
     sortAscending: false
-    sortBy: 'saved_on'
+    sortBy: 'created_on'
     getSortData:
-      saved_on: (el) ->
-        parseInt(el.data('saved_on'))
+      created_on: (el) ->
+        parseInt(el.data('created_on'))
 
   initialize: ->
     # set Isotope masonry columnWidth
@@ -161,7 +181,7 @@ class document.gignal.views.UniBox extends Backbone.View
   initialize: ->
     @listenTo @model, 'change', @render
   render: =>
-    @$el.data 'saved_on', @model.get('saved_on')
+    @$el.data 'created_on', @model.get('created_on')
     # set width
     @$el.css 'width', document.gignal.widget.columnWidth
     # owner?
@@ -178,6 +198,28 @@ getParameterByName = (name) ->
   results = regex.exec(location.search)
   (if not results? then '' else decodeURIComponent(results[1].replace(/\+/g, ' ')))
 
+getUrl = (url) ->
+  window.open url, "feedDialog", "toolbar=0,status=0,width=626,height=370"
+
+myBirdOver = (the) ->
+  the.style.backgroundImage="url('/gignal/images/twitter_blue.png')"
+
+myBirdOut = (the) ->
+  the.style.backgroundImage="url('/gignal/images/twitter_gray.png')"
+
+myFaceOver = (the) ->
+  the.style.backgroundImage="url('/gignal/images/facebook_blue.png')"
+
+myFaceOut = (the) ->
+  the.style.backgroundImage="url('/gignal/images/facebook_gray.png')"
+
+barOver = (the) ->
+  the.children[0].style.display = "block"
+  the.children[1].style.display = "block"
+
+barOut = (the) ->
+  the.children[0].style.display = "none"
+  the.children[1].style.display = "none"
 
 jQuery ($) ->
 
