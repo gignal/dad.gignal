@@ -202,16 +202,16 @@ getUrl = (url) ->
   window.open url, "feedDialog", "toolbar=0,status=0,width=626,height=370"
 
 myBirdOver = (the) ->
-  the.style.backgroundImage="url('/gignal/images/twitter_blue.png')"
+  the.style.backgroundImage="url('gignal/images/twitter_blue.png')"
 
 myBirdOut = (the) ->
-  the.style.backgroundImage="url('/gignal/images/twitter_gray.png')"
+  the.style.backgroundImage="url('gignal/images/twitter_gray.png')"
 
 myFaceOver = (the) ->
-  the.style.backgroundImage="url('/gignal/images/facebook_blue.png')"
+  the.style.backgroundImage="url('gignal/images/facebook_blue.png')"
 
 myFaceOut = (the) ->
-  the.style.backgroundImage="url('/gignal/images/facebook_gray.png')"
+  the.style.backgroundImage="url('gignal/images/facebook_gray.png')"
 
 barOver = (the) ->
   the.children[0].style.display = "block"
