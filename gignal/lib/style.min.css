@@ -33,6 +33,7 @@ body{margin:0;padding:0}
 #gignal-stream #gignal-widget .gignal-outerbox .gignal-toolbox .gignal-service{width:78px;}
 #gignal-stream #gignal-widget .gignal-outerbox .gignal-toolbox .gignal-service a{text-decoration:none;}
 #gignal-stream #gignal-widget .gignal-outerbox .gignal-toolbox .gignal-service a p{margin:0;color:#fff;font-family:arial,sans serif;font-size:.7em;font-weight:normal;letter-spacing:.06em;line-height:2.5em;text-align:center;text-transform:lowercase}
+#gignal-stream #gignal-widget .gignal-outerbox .gignal-toolbox .gignal-service{background-color:#b1b2b3}
 #gignal-stream #gignal-widget .gignal-outerbox .gignal-toolbox .gignal-service:hover{background-color:#404040}
 #gignal-stream #gignal-widget .gignal-outerbox .gignal-toolbox .gignal-tool{border-left:1px solid #ddd;}
 #gignal-stream #gignal-widget .gignal-outerbox .gignal-toolbox .gignal-tool p{left:12px;position:absolute;display:block;top:-24px;height:15px;width:15px;-webkit-transform:rotate(45deg);-moz-transform:rotate(45deg);transform:rotate(45deg);background-color:#f6f6f6;border-bottom:1px solid #ddd;border-right:1px solid #ddd}
