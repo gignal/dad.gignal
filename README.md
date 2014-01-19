@@ -1,5 +1,7 @@
 # Gignal Widget
 
+API mothership: [www.gignal.com](http://www.gignal.com)
+
 ## Install
 
 You need NPM, Grunt and Bower.
