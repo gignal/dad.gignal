@@ -30,8 +30,8 @@ class Post extends Backbone.Model
     shareFB = "javascript: getUrl(\"http://www.facebook.com/sharer.php?u=" + encodeURIComponent(direct) + "\")"
     shareTT = "javascript: getUrl(\"http://twitter.com/share?text=" + encodeURIComponent(direct) + "&url="+ encodeURIComponent(text) + "\")"
     
-    keyFB = '192071307648123'
-    postFB = "javascript: getUrl(\"https://www.facebook.com/dialog/feed?app_id="+keyFB+"&display=popup&link=" + encodeURIComponent(direct) + "&picture=" + encodeURIComponent('http://gignal.com/images/logo-big.png') + "&name=" + encodeURIComponent('Gignal') + "&description=" + encodeURIComponent('Social network only for you') + "&redirect_uri=" + encodeURIComponent('http://gignal.com') + "\")"
+    keyFB = '128990610442'
+    postFB = "javascript: getUrl(\"https://www.facebook.com/dialog/feed?app_id="+keyFB+"&display=popup&link=" + encodeURIComponent(direct) + "&picture=" + encodeURIComponent('http://www.gignal.com/images/g@2x.png') + "&name=" + encodeURIComponent('Gignal') + "&description=" + encodeURIComponent('Gignal amplifies the voice of your audience') + "&redirect_uri=" + encodeURIComponent('http://www.gignal.com') + "\")"
     # convert time to local tz
     # created = (new Date(@get('created'))).getTime() / 1000
     created = @get 'created_on'
