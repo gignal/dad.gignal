@@ -4,6 +4,7 @@ getParameterByName = (name) ->
   results = regex.exec(location.search)
   (if not results? then '' else decodeURIComponent(results[1].replace(/\+/g, ' ')))
 
+
 getUrl = (url) ->
   window.open url, "feedDialog", "toolbar=0,status=0,width=626,height=370"
 
@@ -26,6 +27,7 @@ barOver = (the) ->
 barOut = (the) ->
   the.children[0].style.display = "none"
   the.children[1].style.display = "none"
+
 
 jQuery ($) ->
 

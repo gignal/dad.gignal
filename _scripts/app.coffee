@@ -68,7 +68,7 @@ class Stream extends Backbone.Collection
       eventid = getParameterByName 'eventid'
     return '//api.gignal.com/fetch/' + eventid + '?callback=?'
     #return '//127.0.0.1:3000/fetch/' + eventid + '?callback=?'
-    #return '//gignal.parseapp.com/feed/' + eventid + '?callback=?'
+    # return 'https://gignal.parseapp.com/feed/' + eventid + '?callback=?'
     
 
   calling: false
