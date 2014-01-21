@@ -53,8 +53,8 @@ Post = (function(_super) {
     }
     shareFB = "javascript: getUrl(\"http://www.facebook.com/sharer.php?u=" + encodeURIComponent(direct) + "\")";
     shareTT = "javascript: getUrl(\"http://twitter.com/share?text=" + encodeURIComponent(direct) + "&url=" + encodeURIComponent(text) + "\")";
-    keyFB = '192071307648123';
-    postFB = "javascript: getUrl(\"https://www.facebook.com/dialog/feed?app_id=" + keyFB + "&display=popup&link=" + encodeURIComponent(direct) + "&picture=" + encodeURIComponent('http://gignal.com/images/logo-big.png') + "&name=" + encodeURIComponent('Gignal') + "&description=" + encodeURIComponent('Social network only for you') + "&redirect_uri=" + encodeURIComponent('http://gignal.com') + "\")";
+    keyFB = '128990610442';
+    postFB = "javascript: getUrl(\"https://www.facebook.com/dialog/feed?app_id=" + keyFB + "&display=popup&link=" + encodeURIComponent(direct) + "&picture=" + encodeURIComponent('http://www.gignal.com/images/g@2x.png') + "&name=" + encodeURIComponent('Gignal') + "&description=" + encodeURIComponent('Gignal amplifies the voice of your audience') + "&redirect_uri=" + encodeURIComponent('http://www.gignal.com') + "\")";
     created = this.get('created_on');
     created_local = offset >= 0 ? created - offset : created + offset;
     this.set('created_local', new Date(created_local * 1000));
