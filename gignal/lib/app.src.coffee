@@ -68,7 +68,7 @@ class Stream extends Backbone.Collection
       eventid = getParameterByName 'eventid'
     return '//api.gignal.com/fetch/' + eventid + '?callback=?'
     #return '//127.0.0.1:3000/fetch/' + eventid + '?callback=?'
-    #return '//gignal.parseapp.com/feed/' + eventid + '?callback=?'
+    # return 'https://gignal.parseapp.com/feed/' + eventid + '?callback=?'
     
 
   calling: false
@@ -198,6 +198,7 @@ getParameterByName = (name) ->
   results = regex.exec(location.search)
   (if not results? then '' else decodeURIComponent(results[1].replace(/\+/g, ' ')))
 
+
 getUrl = (url) ->
   window.open url, "feedDialog", "toolbar=0,status=0,width=626,height=370"
 
@@ -220,6 +221,7 @@ barOver = (the) ->
 barOut = (the) ->
   the.children[0].style.display = "none"
   the.children[1].style.display = "none"
+
 
 jQuery ($) ->
 
