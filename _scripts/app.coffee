@@ -27,11 +27,11 @@ class Post extends Backbone.Model
       else
         direct = '#'
 
-    shareFB = "javascript: getUrl(\"http://www.facebook.com/sharer.php?u=" + encodeURIComponent(direct) + "\")"
-    shareTT = "javascript: getUrl(\"http://twitter.com/share?text=" + encodeURIComponent(direct) + "&url="+ encodeURIComponent(text) + "\")"
-    
-    keyFB = '128990610442'
-    postFB = "javascript: getUrl(\"https://www.facebook.com/dialog/feed?app_id="+keyFB+"&display=popup&link=" + encodeURIComponent(direct) + "&picture=" + encodeURIComponent('http://www.gignal.com/images/g@2x.png') + "&name=" + encodeURIComponent('Gignal') + "&description=" + encodeURIComponent('Gignal amplifies the voice of your audience') + "&redirect_uri=" + encodeURIComponent('http://www.gignal.com') + "\")"
+    # shareFB = "javascript: getUrl(\"http://www.facebook.com/sharer.php?u=" + encodeURIComponent(direct) + "\")"
+    # shareTT = "javascript: getUrl(\"http://twitter.com/share?text=" + encodeURIComponent(direct) + "&url="+ encodeURIComponent(text) + "\")"
+    # 
+    # keyFB = '128990610442'
+    # postFB = "javascript: getUrl(\"https://www.facebook.com/dialog/feed?app_id="+keyFB+"&display=popup&link=" + encodeURIComponent(direct) + "&picture=" + encodeURIComponent('http://www.gignal.com/images/g@2x.png') + "&name=" + encodeURIComponent('Gignal') + "&description=" + encodeURIComponent('Gignal amplifies the voice of your audience') + "&redirect_uri=" + encodeURIComponent('http://www.gignal.com') + "\")"
     # convert time to local tz
     # created = (new Date(@get('created'))).getTime() / 1000
     created = @get 'created_on'
@@ -47,13 +47,13 @@ class Post extends Backbone.Model
       service: @get 'service'
       user_image: @get 'user_image'
       photo: if @get('large_photo') isnt '' then @get('large_photo') else false
-      direct: direct
-      shareFB : shareFB
-      shareTT : shareTT
-      postFB : postFB
-      Twitter : Twitter
-      Facebook : Facebook
-      Instagram : Instagram
+      # direct: direct
+      # shareFB : shareFB
+      # shareTT : shareTT
+      # postFB : postFB
+      # Twitter : Twitter
+      # Facebook : Facebook
+      # Instagram : Instagram
     return data
 
 
