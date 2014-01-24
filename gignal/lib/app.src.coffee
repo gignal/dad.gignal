@@ -7,6 +7,9 @@ class Post extends Backbone.Model
   idAttribute: 'stream_id'
   re_links: /((http|https)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?)/g
   offset = ((new Date()).getTimezoneOffset() * 60) - 3600
+  
+  defaults:
+    text: ''
 
   getData: =>
     text = @get 'text'
@@ -62,13 +65,15 @@ class Stream extends Backbone.Collection
   model: Post
 
   url: ->
-    #return '/test/5244076418d1f.js'
     eventid = $('#gignal-widget').data('eventid')
     if getParameterByName 'eventid'
       eventid = getParameterByName 'eventid'
-    return '//api.gignal.com/fetch/' + eventid + '?callback=?'
+    if not eventid?
+      console.error 'Please set URI parameter eventid'
+      return false
+    # return '//api.gignal.com/fetch/' + eventid + '?callback=?'
     #return '//127.0.0.1:3000/fetch/' + eventid + '?callback=?'
-    # return 'https://gignal.parseapp.com/feed/' + eventid + '?callback=?'
+    return 'https://gignal.parseapp.com/feed/' + eventid + '?callback=?'
     
 
   calling: false

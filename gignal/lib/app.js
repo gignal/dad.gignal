@@ -24,6 +24,10 @@ Post = (function(_super) {
 
   offset = ((new Date()).getTimezoneOffset() * 60) - 3600;
 
+  Post.prototype.defaults = {
+    text: ''
+  };
+
   Post.prototype.getData = function() {
     var Facebook, Instagram, Twitter, created, created_local, data, direct, keyFB, postFB, shareFB, shareTT, text, username;
     text = this.get('text');
@@ -100,7 +104,11 @@ Stream = (function(_super) {
     if (getParameterByName('eventid')) {
       eventid = getParameterByName('eventid');
     }
-    return '//api.gignal.com/fetch/' + eventid + '?callback=?';
+    if (eventid == null) {
+      console.error('Please set URI parameter eventid');
+      return false;
+    }
+    return 'https://gignal.parseapp.com/feed/' + eventid + '?callback=?';
   };
 
   Stream.prototype.calling = false;
