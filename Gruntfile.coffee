@@ -5,7 +5,7 @@ module.exports = (grunt) ->
     coffee:
       app:
         options:
-          sourceMap: true
+          # sourceMap: true
           join: true
           bare: true
         files:
