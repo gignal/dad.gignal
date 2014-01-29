@@ -4,7 +4,7 @@ document.gignal =
 
 class Post extends Backbone.Model
 
-  idAttribute: 'stream_id'
+  idAttribute: 'objectId'
   re_links: /((http|https)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?)/g
   offset = ((new Date()).getTimezoneOffset() * 60) - 3600
   
@@ -17,18 +17,7 @@ class Post extends Backbone.Model
     text = null if text.indexOf(' ') is -1
     username = @get 'username'
     username = null if username.indexOf(' ') isnt -1
-    switch @get 'service'
-      when 'Twitter'
-        direct = 'http://twitter.com/' + username + '/status/' + @get 'original_id'
-        Twitter = @get 'original_id'
-      when 'Facebook'
-        direct = 'http://facebook.com/' + @get 'original_id'
-        Facebook = @get 'original_id'
-      when 'Instagram'
-        direct = 'http://instagram.com/p/' + @get 'original_id'
-        Instagram = @get 'original_id'
-      else
-        direct = '#'
+    direct = @get 'link'
 
     shareFB = "javascript: getUrl(\"http://www.facebook.com/sharer.php?u=" + encodeURIComponent(direct) + "\")"
     shareTT = "javascript: getUrl(\"http://twitter.com/share?text=" + encodeURIComponent(direct) + "&url="+ encodeURIComponent(text) + "\")"
@@ -54,9 +43,9 @@ class Post extends Backbone.Model
       shareFB : shareFB
       shareTT : shareTT
       postFB : postFB
-      Twitter : Twitter
-      Facebook : Facebook
-      Instagram : Instagram
+      Twitter : @get 'service' is 'twitter'
+      Facebook : @get 'service' is 'facebook'
+      Instagram : @get 'service' is 'instagram'
     return data
 
 
