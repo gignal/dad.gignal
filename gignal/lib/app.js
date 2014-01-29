@@ -255,6 +255,10 @@ document.gignal.views.UniBox = (function(_super) {
 
   UniBox.prototype.className = 'gignal-outerbox';
 
+  UniBox.prototype.events = {
+    'click .gignal-image': 'showBigImg'
+  };
+
   UniBox.prototype.initialize = function() {
     return this.listenTo(this.model, 'change', this.render);
   };
@@ -269,6 +273,16 @@ document.gignal.views.UniBox = (function(_super) {
       footer: Templates.footer
     }));
     return this;
+  };
+
+  UniBox.prototype.showBigImg = function() {
+    return $.magnificPopup.open({
+      type: 'image',
+      closeOnContentClick: true,
+      items: {
+        src: this.model.get('large_photo')
+      }
+    });
   };
 
   return UniBox;
