@@ -18,7 +18,7 @@ Post = (function(_super) {
     return _ref;
   }
 
-  Post.prototype.idAttribute = 'stream_id';
+  Post.prototype.idAttribute = 'objectId';
 
   Post.prototype.re_links = /((http|https)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?)/g;
 
@@ -29,7 +29,7 @@ Post = (function(_super) {
   };
 
   Post.prototype.getData = function() {
-    var Facebook, Instagram, Twitter, created, created_local, data, direct, keyFB, postFB, shareFB, shareTT, text, username;
+    var created, created_local, data, direct, keyFB, postFB, shareFB, shareTT, text, username;
     text = this.get('text');
     text = text.replace(this.re_links, '<a href="$1" target="_blank">link</a>');
     if (text.indexOf(' ') === -1) {
@@ -39,22 +39,7 @@ Post = (function(_super) {
     if (username.indexOf(' ') !== -1) {
       username = null;
     }
-    switch (this.get('service')) {
-      case 'Twitter':
-        direct = 'http://twitter.com/' + username + '/status/' + this.get('original_id');
-        Twitter = this.get('original_id');
-        break;
-      case 'Facebook':
-        direct = 'http://facebook.com/' + this.get('original_id');
-        Facebook = this.get('original_id');
-        break;
-      case 'Instagram':
-        direct = 'http://instagram.com/p/' + this.get('original_id');
-        Instagram = this.get('original_id');
-        break;
-      default:
-        direct = '#';
-    }
+    direct = this.get('link');
     shareFB = "javascript: getUrl(\"http://www.facebook.com/sharer.php?u=" + encodeURIComponent(direct) + "\")";
     shareTT = "javascript: getUrl(\"http://twitter.com/share?text=" + encodeURIComponent(direct) + "&url=" + encodeURIComponent(text) + "\")";
     keyFB = '128990610442';
@@ -75,9 +60,9 @@ Post = (function(_super) {
       shareFB: shareFB,
       shareTT: shareTT,
       postFB: postFB,
-      Twitter: Twitter,
-      Facebook: Facebook,
-      Instagram: Instagram
+      Twitter: this.get('service' === 'twitter'),
+      Facebook: this.get('service' === 'facebook'),
+      Instagram: this.get('service' === 'instagram')
     };
     return data;
   };
