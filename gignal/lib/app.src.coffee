@@ -6,7 +6,6 @@ class Post extends Backbone.Model
 
   idAttribute: 'objectId'
   re_links: /((http|https)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?)/g
-  offset = ((new Date()).getTimezoneOffset() * 60) - 3600
   
   defaults:
     text: ''
@@ -23,29 +22,31 @@ class Post extends Backbone.Model
     shareTT = "javascript: getUrl(\"http://twitter.com/share?text=" + encodeURIComponent(direct) + "&url="+ encodeURIComponent(text) + "\")"
     
     keyFB = '128990610442'
-    postFB = "javascript: getUrl(\"https://www.facebook.com/dialog/feed?app_id="+keyFB+"&display=popup&link=" + encodeURIComponent(direct) + "&picture=" + encodeURIComponent('http://www.gignal.com/images/g@2x.png') + "&name=" + encodeURIComponent('Gignal') + "&description=" + encodeURIComponent('Gignal amplifies the voice of your audience') + "&redirect_uri=" + encodeURIComponent('http://www.gignal.com') + "\")"
+    # postFB = "javascript: getUrl(\"https://www.facebook.com/dialog/feed?app_id="+keyFB+"&display=popup&link=" + encodeURIComponent(direct) + "&picture=" + encodeURIComponent('http://www.gignal.com/images/g@2x.png') + "&name=" + encodeURIComponent('Gignal') + "&description=" + encodeURIComponent('Gignal amplifies the voice of your audience') + "&redirect_uri=" + encodeURIComponent('http://www.gignal.com') + "\")"
+    postFB = "javascript: getUrl(\"https://www.facebook.com/dialog/feed?app_id=" + keyFB + "&display=popup&link=" + encodeURIComponent(direct) + "&picture=" + encodeURIComponent(@get('large_photo')) + "&redirect_uri=" + encodeURIComponent('http://www.gignal.com/') + "\")"
     # convert time to local tz
     # created = (new Date(@get('created'))).getTime() / 1000
-    created = @get 'created_on'
-    created_local = if offset >= 0 then created - offset else created + offset
-    @set 'created_local', new Date(created_local * 1000)
+    # created = @get 'created_on'
+    # created_local = if offset >= 0 then created - offset else created + offset
+    # @set 'created_local', new Date(created_local * 1000)
+    @set 'created', new Date(@get('created_on') * 1000)
     # prepare data
     data =
       message: text
       username: username
       name: @get 'name'
-      since: humaneDate @get('created_local')
+      since: humaneDate @get 'created'
       link: direct
       service: @get 'service'
       user_image: @get 'user_image'
       photo: if @get('large_photo') isnt '' then @get('large_photo') else false
       direct: direct
-      shareFB : shareFB
-      shareTT : shareTT
-      postFB : postFB
-      Twitter : @get 'service' is 'twitter'
-      Facebook : @get 'service' is 'facebook'
-      Instagram : @get 'service' is 'instagram'
+      shareFB: shareFB
+      shareTT: shareTT
+      postFB: postFB
+      Twitter: @get 'original_id' if @get('service') is 'twitter'
+      Facebook: @get 'original_id' if @get('service') is 'facebook'
+      Instagram: @get 'original_id' if @get('service') is 'instagram'
     return data
 
 
@@ -57,13 +58,12 @@ class Stream extends Backbone.Collection
     eventid = $('#gignal-widget').data('eventid')
     if getParameterByName 'eventid'
       eventid = getParameterByName 'eventid'
-    if not eventid?
+    if not eventid
       console.error 'Please set URI parameter eventid'
       return false
     # return '//api.gignal.com/fetch/' + eventid + '?callback=?'
-    #return '//127.0.0.1:3000/fetch/' + eventid + '?callback=?'
-    return 'https://gignal.parseapp.com/feed/' + eventid + '?callback=?'
-    
+    return '//gignal.parseapp.com/feed/' + eventid + '?callback=?'
+    # return '//api.gignal.com/feed/' + eventid + '?callback=?'
 
   calling: false
   parameters:
@@ -138,7 +138,7 @@ class Stream extends Backbone.Collection
     sleep = 30000
     setInterval ->
       document.gignal.stream.each (model) ->
-        model.set 'since', humaneDate(model.get('created_local'))
+        model.set 'since', humaneDate(model.get('created'))
     , sleep
 
 class document.gignal.views.Event extends Backbone.View
