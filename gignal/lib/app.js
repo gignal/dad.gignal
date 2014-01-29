@@ -36,10 +36,10 @@ Post = (function(_super) {
       username = null;
     }
     direct = this.get('link');
-    shareFB = "javascript: getUrl(\"http://www.facebook.com/sharer.php?u=" + encodeURIComponent(direct) + "\")";
-    shareTT = "javascript: getUrl(\"http://twitter.com/share?text=" + encodeURIComponent(direct) + "&url=" + encodeURIComponent(text) + "\")";
+    shareFB = 'javascript:getUrl("http://www.facebook.com/sharer.php?u=' + encodeURIComponent(direct) + '");';
+    shareTT = 'javascript:getUrl("http://twitter.com/share?text=' + encodeURIComponent(direct) + '&url=' + encodeURIComponent(text) + '");';
     keyFB = '128990610442';
-    postFB = "javascript: getUrl(\"https://www.facebook.com/dialog/feed?app_id=" + keyFB + "&display=popup&link=" + encodeURIComponent(direct) + "&picture=" + encodeURIComponent(this.get('large_photo')) + "&redirect_uri=" + encodeURIComponent('http://www.gignal.com/') + "\")";
+    postFB = 'javascript:getUrl("https://www.facebook.com/dialog/feed?app_id=' + keyFB + '&display=popup&link=' + encodeURIComponent(direct) + '&picture=' + encodeURIComponent(this.get('large_photo')) + '&redirect_uri=' + encodeURIComponent('http://www.gignal.com/') + '");';
     this.set('created', new Date(this.get('created_on') * 1000));
     data = {
       message: text,

@@ -17,18 +17,12 @@ class Post extends Backbone.Model
     username = @get 'username'
     username = null if username.indexOf(' ') isnt -1
     direct = @get 'link'
-
-    shareFB = "javascript: getUrl(\"http://www.facebook.com/sharer.php?u=" + encodeURIComponent(direct) + "\")"
-    shareTT = "javascript: getUrl(\"http://twitter.com/share?text=" + encodeURIComponent(direct) + "&url="+ encodeURIComponent(text) + "\")"
-    
+    # todo: backbone this
+    shareFB = 'javascript:getUrl("http://www.facebook.com/sharer.php?u=' + encodeURIComponent(direct) + '");'
+    shareTT = 'javascript:getUrl("http://twitter.com/share?text=' + encodeURIComponent(direct) + '&url=' + encodeURIComponent(text) + '");'
     keyFB = '128990610442'
-    # postFB = "javascript: getUrl(\"https://www.facebook.com/dialog/feed?app_id="+keyFB+"&display=popup&link=" + encodeURIComponent(direct) + "&picture=" + encodeURIComponent('http://www.gignal.com/images/g@2x.png') + "&name=" + encodeURIComponent('Gignal') + "&description=" + encodeURIComponent('Gignal amplifies the voice of your audience') + "&redirect_uri=" + encodeURIComponent('http://www.gignal.com') + "\")"
-    postFB = "javascript: getUrl(\"https://www.facebook.com/dialog/feed?app_id=" + keyFB + "&display=popup&link=" + encodeURIComponent(direct) + "&picture=" + encodeURIComponent(@get('large_photo')) + "&redirect_uri=" + encodeURIComponent('http://www.gignal.com/') + "\")"
-    # convert time to local tz
-    # created = (new Date(@get('created'))).getTime() / 1000
-    # created = @get 'created_on'
-    # created_local = if offset >= 0 then created - offset else created + offset
-    # @set 'created_local', new Date(created_local * 1000)
+    postFB = 'javascript:getUrl("https://www.facebook.com/dialog/feed?app_id=' + keyFB + '&display=popup&link=' + encodeURIComponent(direct) + '&picture=' + encodeURIComponent(@get('large_photo')) + '&redirect_uri=' + encodeURIComponent('http://www.gignal.com/') + '");'
+    # set date for humaneDate
     @set 'created', new Date(@get('created_on') * 1000)
     # prepare data
     data =
