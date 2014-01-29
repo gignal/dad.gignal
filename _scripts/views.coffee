@@ -29,9 +29,12 @@ class document.gignal.views.Event extends Backbone.View
 class document.gignal.views.UniBox extends Backbone.View
   tagName: 'div'
   className: 'gignal-outerbox'
+  events:
+    'click .gignal-image': 'showBigImg'
   initialize: ->
     @listenTo @model, 'change', @render
   render: =>
+    # @$el.find('.gignal-image').magnificPopup()
     @$el.data 'created_on', @model.get('created_on')
     # set width
     @$el.css 'width', document.gignal.widget.columnWidth
@@ -42,3 +45,10 @@ class document.gignal.views.UniBox extends Backbone.View
     @$el.html Templates.uni.render @model.getData(),
       footer: Templates.footer
     return @
+  showBigImg: ->
+    $.magnificPopup.open
+      type: 'image'
+      closeOnContentClick: true
+      items:
+        src: @model.get 'large_photo'
+    

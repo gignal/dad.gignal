@@ -27,9 +27,9 @@ module.exports = (grunt) ->
 
     uglify:
       options:
-        sourceMapRoot: 'gignal/lib'
-        sourceMapIn: 'gignal/lib/app.js.map'
-        sourceMap: './gignal/lib/app.min.js.map'
+        # sourceMapRoot: 'gignal/lib'
+        # sourceMapIn: 'gignal/lib/app.js.map'
+        # sourceMap: './gignal/lib/app.min.js.map'
         mangle: false
         #wrap: 'gignal'
       app:
@@ -41,6 +41,7 @@ module.exports = (grunt) ->
             'bower_components/humane-dates/humane.js'
             'bower_components/scrollbottom/src/jquery.scrollbottom.js'
             'bower_components/hogan/web/builds/2.0.0/template-2.0.0.js'
+            'bower_components/magnific-popup/dist/jquery.magnific-popup.js'
             'gignal/lib/templates.js'
             'gignal/lib/app.js'
           ]
@@ -50,14 +51,22 @@ module.exports = (grunt) ->
         options:
           paths: ['gignal/lib']
         files:
-          'gignal/lib/style.min.css': [
+          'gignal/lib/stylus.min.css': [
             '_scripts/style.styl'
+          ]
+          
+    cssmin:
+      app:
+        files:
+          'gignal/lib/style.min.css': [
+            'gignal/lib/stylus.min.css'
+            'bower_components/magnific-popup/dist/magnific-popup.css'
           ]
 
     watch:
       stylus:
         files: ['_scripts/*.styl']
-        tasks: ['stylus']
+        tasks: ['stylus', 'cssmin']
       coffee:
         files: ['_scripts/*.coffee', '_scripts/*.mustache']
         tasks: ['coffee', 'hogan', 'uglify']
@@ -67,7 +76,7 @@ module.exports = (grunt) ->
         options:
           keepalive: true
 
-  grunt.registerTask 'default', ['coffee', 'hogan', 'uglify', 'stylus']
+  grunt.registerTask 'default', ['coffee', 'hogan', 'uglify', 'stylus', 'cssmin']
 
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-contrib-connect'
@@ -75,3 +84,4 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-uglify'
   grunt.loadNpmTasks 'grunt-contrib-hogan'
+  grunt.loadNpmTasks 'grunt-contrib-cssmin'
