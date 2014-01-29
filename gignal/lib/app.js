@@ -87,7 +87,7 @@ Stream = (function(_super) {
       console.error('Please set URI parameter eventid');
       return false;
     }
-    return '//gignal.parseapp.com/feed/' + eventid + '?callback=?';
+    return '//api.gignal.com/feed/' + eventid + '?callback=?';
   };
 
   Stream.prototype.calling = false;
@@ -344,7 +344,3 @@ jQuery(function($) {
     return document.gignal.stream.update(true);
   });
 });
-
-/*
-//@ sourceMappingURL=app.js.map
-*/
