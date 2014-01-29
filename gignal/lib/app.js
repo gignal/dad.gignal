@@ -344,7 +344,3 @@ jQuery(function($) {
     return document.gignal.stream.update(true);
   });
 });
-
-/*
-//@ sourceMappingURL=app.js.map
-*/
