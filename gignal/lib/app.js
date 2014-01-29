@@ -8,8 +8,6 @@ document.gignal = {
 };
 
 Post = (function(_super) {
-  var offset;
-
   __extends(Post, _super);
 
   function Post() {
@@ -22,14 +20,12 @@ Post = (function(_super) {
 
   Post.prototype.re_links = /((http|https)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?)/g;
 
-  offset = ((new Date()).getTimezoneOffset() * 60) - 3600;
-
   Post.prototype.defaults = {
     text: ''
   };
 
   Post.prototype.getData = function() {
-    var created, created_local, data, direct, keyFB, postFB, shareFB, shareTT, text, username;
+    var data, direct, keyFB, postFB, shareFB, shareTT, text, username;
     text = this.get('text');
     text = text.replace(this.re_links, '<a href="$1" target="_blank">link</a>');
     if (text.indexOf(' ') === -1) {
@@ -43,15 +39,13 @@ Post = (function(_super) {
     shareFB = "javascript: getUrl(\"http://www.facebook.com/sharer.php?u=" + encodeURIComponent(direct) + "\")";
     shareTT = "javascript: getUrl(\"http://twitter.com/share?text=" + encodeURIComponent(direct) + "&url=" + encodeURIComponent(text) + "\")";
     keyFB = '128990610442';
-    postFB = "javascript: getUrl(\"https://www.facebook.com/dialog/feed?app_id=" + keyFB + "&display=popup&link=" + encodeURIComponent(direct) + "&picture=" + encodeURIComponent('http://www.gignal.com/images/g@2x.png') + "&name=" + encodeURIComponent('Gignal') + "&description=" + encodeURIComponent('Gignal amplifies the voice of your audience') + "&redirect_uri=" + encodeURIComponent('http://www.gignal.com') + "\")";
-    created = this.get('created_on');
-    created_local = offset >= 0 ? created - offset : created + offset;
-    this.set('created_local', new Date(created_local * 1000));
+    postFB = "javascript: getUrl(\"https://www.facebook.com/dialog/feed?app_id=" + keyFB + "&display=popup&link=" + encodeURIComponent(direct) + "&picture=" + encodeURIComponent(this.get('large_photo')) + "&redirect_uri=" + encodeURIComponent('http://www.gignal.com/') + "\")";
+    this.set('created', new Date(this.get('created_on') * 1000));
     data = {
       message: text,
       username: username,
       name: this.get('name'),
-      since: humaneDate(this.get('created_local')),
+      since: humaneDate(this.get('created')),
       link: direct,
       service: this.get('service'),
       user_image: this.get('user_image'),
@@ -60,9 +54,9 @@ Post = (function(_super) {
       shareFB: shareFB,
       shareTT: shareTT,
       postFB: postFB,
-      Twitter: this.get('service' === 'twitter'),
-      Facebook: this.get('service' === 'facebook'),
-      Instagram: this.get('service' === 'instagram')
+      Twitter: this.get('service') === 'twitter' ? this.get('original_id') : void 0,
+      Facebook: this.get('service') === 'facebook' ? this.get('original_id') : void 0,
+      Instagram: this.get('service') === 'instagram' ? this.get('original_id') : void 0
     };
     return data;
   };
@@ -89,11 +83,11 @@ Stream = (function(_super) {
     if (getParameterByName('eventid')) {
       eventid = getParameterByName('eventid');
     }
-    if (eventid == null) {
+    if (!eventid) {
       console.error('Please set URI parameter eventid');
       return false;
     }
-    return 'https://gignal.parseapp.com/feed/' + eventid + '?callback=?';
+    return '//gignal.parseapp.com/feed/' + eventid + '?callback=?';
   };
 
   Stream.prototype.calling = false;
@@ -193,7 +187,7 @@ Stream = (function(_super) {
     sleep = 30000;
     return setInterval(function() {
       return document.gignal.stream.each(function(model) {
-        return model.set('since', humaneDate(model.get('created_local')));
+        return model.set('since', humaneDate(model.get('created')));
       });
     }, sleep);
   };
