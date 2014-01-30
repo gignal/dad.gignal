@@ -287,7 +287,7 @@ document.gignal.views.UniBox = (function(_super) {
   UniBox.prototype.embedly = function(link, callback) {
     var key, url;
     key = '3ce4f3260f2d41788751d9d3f43dcab2';
-    url = '//api.embed.ly/1/oembed?key=' + key + '&url=' + link + '&frame=true&secure=true';
+    url = '//api.embed.ly/1/oembed?key=' + key + '&url=' + link;
     return $.getJSON(url, function(data) {
       var src;
       src = data.html != null ? data.html : data.url;
