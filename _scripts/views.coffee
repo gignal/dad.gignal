@@ -54,7 +54,7 @@ class document.gignal.views.UniBox extends Backbone.View
     return @
   embedly: (link, callback) ->
     key = '3ce4f3260f2d41788751d9d3f43dcab2'
-    url = '//api.embed.ly/1/oembed?key=' + key + '&url=' + link + '&frame=true&secure=true'
+    url = '//api.embed.ly/1/oembed?key=' + key + '&url=' + link
     $.getJSON url, (data) ->
       src = if data.html? then data.html else data.url
       callback null, src
