@@ -33,7 +33,7 @@ class document.gignal.views.UniBox extends Backbone.View
     'click .gignal-image': 'showBigImg'
   initialize: ->
     @listenTo @model, 'change', @render
-    if @model.get('type') is 'photo'
+    if @model.get('type') is 'photo' or @model.get('type') is 'video'
       $('<img/>').attr('src', @model.get('large_photo'))
       .load =>
         $(this).remove()
@@ -60,7 +60,6 @@ class document.gignal.views.UniBox extends Backbone.View
       callback null, src
   showVideo: ->
     @embedly @model.get('link'), (err, html) ->
-      console.log html
       $.magnificPopup.open
         type: 'iframe'
         items:
