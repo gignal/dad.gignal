@@ -87,13 +87,13 @@ Stream = (function(_super) {
       console.error('Please set URI parameter eventid');
       return false;
     }
-    return '//api.gignal.com/feed/' + eventid + '?callback=?';
+    return '//gignal.parseapp.com/feed/' + eventid + '?callback=?';
   };
 
   Stream.prototype.calling = false;
 
   Stream.prototype.parameters = {
-    limit: 25,
+    limit: 30,
     offset: 0,
     sinceTime: 0
   };
@@ -110,8 +110,7 @@ Stream = (function(_super) {
     view = new document.gignal.views.UniBox({
       model: model
     });
-    document.gignal.widget.$el.isotope('insert', view.render().$el);
-    return document.gignal.widget.refresh();
+    return document.gignal.widget.$el.isotope('insert', view.render().$el);
   };
 
   Stream.prototype.parse = function(response) {
@@ -186,8 +185,8 @@ Stream = (function(_super) {
     var sleep;
     sleep = 30000;
     return setInterval(function() {
-      return document.gignal.stream.each(function(model) {
-        return model.set('since', humaneDate(model.get('created')));
+      return $('.gignal-outerbox').each(function() {
+        return $(this).find('.since').html(humaneDate($(this).data('created')));
       });
     }, sleep);
   };
@@ -260,11 +259,21 @@ document.gignal.views.UniBox = (function(_super) {
   };
 
   UniBox.prototype.initialize = function() {
-    return this.listenTo(this.model, 'change', this.render);
+    var _this = this;
+    this.listenTo(this.model, 'change', this.render);
+    if (this.model.get('type') === 'photo') {
+      return $('<img/>').attr('src', this.model.get('large_photo')).load(function() {
+        $(_this).remove();
+        _this.$('.gignal-image').css('background-image', 'url(' + _this.model.get('large_photo') + ')');
+        return _this.$('.gignal-image').removeClass('gignal-image-loading');
+      }).error(function() {
+        return document.gignal.widget.$el.isotope('remove', _this.$el);
+      });
+    }
   };
 
   UniBox.prototype.render = function() {
-    this.$el.data('created_on', this.model.get('created_on'));
+    this.$el.data('created', this.model.get('created'));
     this.$el.css('width', document.gignal.widget.columnWidth);
     if (this.model.get('admin_entry')) {
       this.$el.addClass('gignal-owner');
@@ -275,7 +284,32 @@ document.gignal.views.UniBox = (function(_super) {
     return this;
   };
 
+  UniBox.prototype.embedly = function(link, callback) {
+    var key, url;
+    key = '962eaf4c483a49ffbd435c8c61498ed9';
+    url = '//api.embed.ly/1/oembed?key=' + key + '&url=' + link;
+    return $.getJSON(url, function(data) {
+      var src;
+      src = data.html != null ? data.html : data.url;
+      return callback(null, src);
+    });
+  };
+
+  UniBox.prototype.showVideo = function() {
+    return this.embedly(this.model.get('link'), function(err, html) {
+      return $.magnificPopup.open({
+        type: 'iframe',
+        items: {
+          src: html
+        }
+      });
+    });
+  };
+
   UniBox.prototype.showBigImg = function() {
+    if (this.model.get('type') === 'video') {
+      return this.showVideo();
+    }
     return $.magnificPopup.open({
       type: 'image',
       closeOnContentClick: true,

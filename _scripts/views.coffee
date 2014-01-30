@@ -33,9 +33,16 @@ class document.gignal.views.UniBox extends Backbone.View
     'click .gignal-image': 'showBigImg'
   initialize: ->
     @listenTo @model, 'change', @render
+    if @model.get('type') is 'photo'
+      $('<img/>').attr('src', @model.get('large_photo'))
+      .load =>
+        $(this).remove()
+        @$('.gignal-image').css 'background-image', 'url(' + @model.get('large_photo') + ')'
+        @$('.gignal-image').removeClass 'gignal-image-loading'
+      .error =>
+        document.gignal.widget.$el.isotope 'remove', @$el
   render: =>
-    # @$el.find('.gignal-image').magnificPopup()
-    @$el.data 'created_on', @model.get('created_on')
+    @$el.data 'created', @model.get('created')
     # set width
     @$el.css 'width', document.gignal.widget.columnWidth
     # owner?
@@ -45,7 +52,21 @@ class document.gignal.views.UniBox extends Backbone.View
     @$el.html Templates.uni.render @model.getData(),
       footer: Templates.footer
     return @
+  embedly: (link, callback) ->
+    key = '962eaf4c483a49ffbd435c8c61498ed9'
+    url = '//api.embed.ly/1/oembed?key=' + key + '&url=' + link
+    $.getJSON url, (data) ->
+      src = if data.html? then data.html else data.url
+      callback null, src
+  showVideo: ->
+    @embedly @model.get('link'), (err, html) ->
+      $.magnificPopup.open
+        type: 'iframe'
+        items:
+          src: html
   showBigImg: ->
+    if @model.get('type') is 'video'
+      return @showVideo()
     $.magnificPopup.open
       type: 'image'
       closeOnContentClick: true

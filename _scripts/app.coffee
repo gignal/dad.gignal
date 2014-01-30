@@ -56,12 +56,12 @@ class Stream extends Backbone.Collection
       console.error 'Please set URI parameter eventid'
       return false
     # return '//api.gignal.com/fetch/' + eventid + '?callback=?'
-    # return '//gignal.parseapp.com/feed/' + eventid + '?callback=?'
-    return '//api.gignal.com/feed/' + eventid + '?callback=?'
+    return '//gignal.parseapp.com/feed/' + eventid + '?callback=?'
+    # return '//api.gignal.com/feed/' + eventid + '?callback=?'
 
   calling: false
   parameters:
-    limit: 25
+    limit: 30
     offset: 0
     sinceTime: 0
 
@@ -75,7 +75,7 @@ class Stream extends Backbone.Collection
     view = new document.gignal.views.UniBox
       model: model
     document.gignal.widget.$el.isotope 'insert', view.render().$el
-    document.gignal.widget.refresh()
+    # document.gignal.widget.refresh()
 
 
   parse: (response) ->
@@ -131,6 +131,8 @@ class Stream extends Backbone.Collection
   updateTimes: ->
     sleep = 30000
     setInterval ->
-      document.gignal.stream.each (model) ->
-        model.set 'since', humaneDate(model.get('created'))
+      # document.gignal.stream.each (model) ->
+      #   model.set 'since', humaneDate(model.get('created'))
+      $('.gignal-outerbox').each ->
+        $(this).find('.since').html(humaneDate($(this).data('created')))
     , sleep
