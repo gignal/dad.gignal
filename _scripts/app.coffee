@@ -56,8 +56,8 @@ class Stream extends Backbone.Collection
       console.error 'Please set URI parameter eventid'
       return false
     # return '//api.gignal.com/fetch/' + eventid + '?callback=?'
-    return '//gignal.parseapp.com/feed/' + eventid + '?callback=?'
-    # return '//api.gignal.com/feed/' + eventid + '?callback=?'
+    # return '//gignal.parseapp.com/feed/' + eventid + '?callback=?'
+    return '//api.gignal.com/feed/' + eventid + '?callback=?'
 
   calling: false
   parameters:

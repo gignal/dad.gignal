@@ -87,7 +87,7 @@ Stream = (function(_super) {
       console.error('Please set URI parameter eventid');
       return false;
     }
-    return '//gignal.parseapp.com/feed/' + eventid + '?callback=?';
+    return '//api.gignal.com/feed/' + eventid + '?callback=?';
   };
 
   Stream.prototype.calling = false;
@@ -286,8 +286,8 @@ document.gignal.views.UniBox = (function(_super) {
 
   UniBox.prototype.embedly = function(link, callback) {
     var key, url;
-    key = '962eaf4c483a49ffbd435c8c61498ed9';
-    url = '//api.embed.ly/1/oembed?key=' + key + '&url=' + link + '&autoplay=true&videosrc=true';
+    key = '3ce4f3260f2d41788751d9d3f43dcab2';
+    url = '//api.embed.ly/1/oembed?key=' + key + '&url=' + link + '&frame=true&secure=true';
     return $.getJSON(url, function(data) {
       var src;
       src = data.html != null ? data.html : data.url;
@@ -297,6 +297,7 @@ document.gignal.views.UniBox = (function(_super) {
 
   UniBox.prototype.showVideo = function() {
     return this.embedly(this.model.get('link'), function(err, html) {
+      console.log(html);
       return $.magnificPopup.open({
         type: 'iframe',
         items: {

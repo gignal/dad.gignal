@@ -53,13 +53,14 @@ class document.gignal.views.UniBox extends Backbone.View
       footer: Templates.footer
     return @
   embedly: (link, callback) ->
-    key = '962eaf4c483a49ffbd435c8c61498ed9'
-    url = '//api.embed.ly/1/oembed?key=' + key + '&url=' + link + '&autoplay=true&videosrc=true'
+    key = '3ce4f3260f2d41788751d9d3f43dcab2'
+    url = '//api.embed.ly/1/oembed?key=' + key + '&url=' + link + '&frame=true&secure=true'
     $.getJSON url, (data) ->
       src = if data.html? then data.html else data.url
       callback null, src
   showVideo: ->
     @embedly @model.get('link'), (err, html) ->
+      console.log html
       $.magnificPopup.open
         type: 'iframe'
         items:
