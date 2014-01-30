@@ -261,7 +261,7 @@ document.gignal.views.UniBox = (function(_super) {
   UniBox.prototype.initialize = function() {
     var _this = this;
     this.listenTo(this.model, 'change', this.render);
-    if (this.model.get('type') === 'photo') {
+    if (this.model.get('type') === 'photo' || this.model.get('type') === 'video') {
       return $('<img/>').attr('src', this.model.get('large_photo')).load(function() {
         $(_this).remove();
         _this.$('.gignal-image').css('background-image', 'url(' + _this.model.get('large_photo') + ')');
@@ -297,7 +297,6 @@ document.gignal.views.UniBox = (function(_super) {
 
   UniBox.prototype.showVideo = function() {
     return this.embedly(this.model.get('link'), function(err, html) {
-      console.log(html);
       return $.magnificPopup.open({
         type: 'iframe',
         items: {
