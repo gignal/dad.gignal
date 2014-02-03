@@ -289,17 +289,15 @@ document.gignal.views.UniBox = (function(_super) {
     key = '3ce4f3260f2d41788751d9d3f43dcab2';
     url = '//api.embed.ly/1/oembed?key=' + key + '&url=' + link;
     return $.getJSON(url, function(data) {
-      var src;
-      src = data.html != null ? data.html : data.url;
-      return callback(null, src);
+      return callback(null, data.html);
     });
   };
 
   UniBox.prototype.showVideo = function() {
     return this.embedly(this.model.get('link'), function(err, html) {
       return $.magnificPopup.open({
-        type: 'iframe',
         items: {
+          type: 'inline',
           src: html
         }
       });
