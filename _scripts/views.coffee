@@ -56,13 +56,12 @@ class document.gignal.views.UniBox extends Backbone.View
     key = '3ce4f3260f2d41788751d9d3f43dcab2'
     url = '//api.embed.ly/1/oembed?key=' + key + '&url=' + link
     $.getJSON url, (data) ->
-      src = if data.html? then data.html else data.url
-      callback null, src
+      callback null, data.html
   showVideo: ->
     @embedly @model.get('link'), (err, html) ->
       $.magnificPopup.open
-        type: 'iframe'
         items:
+          type: 'inline'
           src: html
   showBigImg: ->
     if @model.get('type') is 'video'
