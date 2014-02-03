@@ -39,5 +39,5 @@ jQuery ($) ->
   document.gignal.widget = new document.gignal.views.Event()
   document.gignal.stream = new Stream()
 
-  $(window).on 'scrollBottom', offsetY: -100, ->
+  $(window).on 'scrollBottom', offsetY: -500, ->
     document.gignal.stream.update true

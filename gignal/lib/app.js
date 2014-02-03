@@ -371,7 +371,7 @@ jQuery(function($) {
   document.gignal.widget = new document.gignal.views.Event();
   document.gignal.stream = new Stream();
   return $(window).on('scrollBottom', {
-    offsetY: -100
+    offsetY: -500
   }, function() {
     return document.gignal.stream.update(true);
   });
