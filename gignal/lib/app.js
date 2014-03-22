@@ -259,16 +259,22 @@ document.gignal.views.UniBox = (function(_super) {
   };
 
   UniBox.prototype.initialize = function() {
-    var _this = this;
+    var filter,
+      _this = this;
     this.listenTo(this.model, 'change', this.render);
     if (this.model.get('type') === 'photo' || this.model.get('type') === 'video') {
-      return $('<img/>').attr('src', this.model.get('large_photo')).load(function() {
+      $('<img/>').attr('src', this.model.get('large_photo')).load(function() {
         $(_this).remove();
         _this.$('.gignal-image').css('background-image', 'url(' + _this.model.get('large_photo') + ')');
         return _this.$('.gignal-image').removeClass('gignal-image-loading');
       }).error(function() {
         return document.gignal.widget.$el.isotope('remove', _this.$el);
       });
+      if ($.browser.msie) {
+        filter = 'progid:DXImageTransform.Microsoft.AlphaImageLoader(src="' + this.model.get('large_photo') + '",sizingMethod="scale");';
+        this.$('.gignal-image').css('filter', filter);
+        return this.$('.gignal-image').css('-ms-filter', '\'' + filter + '\'');
+      }
     }
   };
 

@@ -41,6 +41,10 @@ class document.gignal.views.UniBox extends Backbone.View
         @$('.gignal-image').removeClass 'gignal-image-loading'
       .error =>
         document.gignal.widget.$el.isotope 'remove', @$el
+      if $.browser.msie
+        filter = 'progid:DXImageTransform.Microsoft.AlphaImageLoader(src="' + @model.get('large_photo') + '",sizingMethod="scale");'
+        @$('.gignal-image').css 'filter', filter
+        @$('.gignal-image').css '-ms-filter', '\'' + filter + '\''
   render: =>
     @$el.data 'created', @model.get('created')
     # set width
@@ -71,4 +75,3 @@ class document.gignal.views.UniBox extends Backbone.View
       closeOnContentClick: true
       items:
         src: @model.get 'large_photo'
-    
