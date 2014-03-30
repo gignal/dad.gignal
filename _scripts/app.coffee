@@ -76,8 +76,6 @@ class Stream extends Backbone.Collection
     view = new document.gignal.views.UniBox
       model: model
     document.gignal.widget.$el.isotope 'insert', view.render().$el
-    # document.gignal.widget.refresh()
-
 
   parse: (response) ->
     return response.stream
@@ -132,8 +130,6 @@ class Stream extends Backbone.Collection
   updateTimes: ->
     sleep = 30000
     setInterval ->
-      # document.gignal.stream.each (model) ->
-      #   model.set 'since', humaneDate(model.get('created'))
       $('.gignal-outerbox').each ->
         $(this).find('.since').html(humaneDate($(this).data('created')))
     , sleep
