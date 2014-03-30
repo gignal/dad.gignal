@@ -6,7 +6,7 @@ class Post extends Backbone.Model
 
   idAttribute: 'objectId'
   re_links: /((http|https)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?)/g
-  
+
   defaults:
     text: ''
 
@@ -55,9 +55,10 @@ class Stream extends Backbone.Collection
     if not eventid
       console.error 'Please set URI parameter eventid'
       return false
-    # return '//api.gignal.com/fetch/' + eventid + '?callback=?'
-    # return '//gignal.parseapp.com/feed/' + eventid + '?callback=?'
-    return '//api.gignal.com/feed/' + eventid + '?callback=?'
+    if document.location.protocol is 'http:'
+      return 'http://api.gignal.com/feed/' + eventid + '?callback=?'
+    else
+      return '//gignal.parseapp.com/feed/' + eventid + '?callback=?'
 
   calling: false
   parameters:
