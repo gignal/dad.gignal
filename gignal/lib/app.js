@@ -87,7 +87,11 @@ Stream = (function(_super) {
       console.error('Please set URI parameter eventid');
       return false;
     }
-    return '//api.gignal.com/feed/' + eventid + '?callback=?';
+    if (document.location.protocol === 'http:') {
+      return 'http://api.gignal.com/feed/' + eventid + '?callback=?';
+    } else {
+      return '//gignal.parseapp.com/feed/' + eventid + '?callback=?';
+    }
   };
 
   Stream.prototype.calling = false;
@@ -259,16 +263,22 @@ document.gignal.views.UniBox = (function(_super) {
   };
 
   UniBox.prototype.initialize = function() {
-    var _this = this;
+    var filter,
+      _this = this;
     this.listenTo(this.model, 'change', this.render);
     if (this.model.get('type') === 'photo' || this.model.get('type') === 'video') {
-      return $('<img/>').attr('src', this.model.get('large_photo')).load(function() {
+      $('<img/>').attr('src', this.model.get('large_photo')).load(function() {
         $(_this).remove();
         _this.$('.gignal-image').css('background-image', 'url(' + _this.model.get('large_photo') + ')');
         return _this.$('.gignal-image').removeClass('gignal-image-loading');
       }).error(function() {
         return document.gignal.widget.$el.isotope('remove', _this.$el);
       });
+      if ($.browser && $.browser.msie) {
+        filter = 'progid:DXImageTransform.Microsoft.AlphaImageLoader(src="' + this.model.get('large_photo') + '",sizingMethod="scale");';
+        this.$('.gignal-image').css('filter', filter);
+        return this.$('.gignal-image').css('-ms-filter', '\'' + filter + '\'');
+      }
     }
   };
 
@@ -338,19 +348,19 @@ getUrl = function(url) {
 };
 
 myBirdOver = function(the) {
-  return the.style.backgroundImage = "url('gignal/images/twitter_blue.png')";
+  return the.style.backgroundImage = "url('//gignal.github.io/widget/gignal/images/twitter_blue.png')";
 };
 
 myBirdOut = function(the) {
-  return the.style.backgroundImage = "url('gignal/images/twitter_gray.png')";
+  return the.style.backgroundImage = "url('//gignal.github.io/widget/gignal/images/twitter_gray.png')";
 };
 
 myFaceOver = function(the) {
-  return the.style.backgroundImage = "url('gignal/images/facebook_blue.png')";
+  return the.style.backgroundImage = "url('//gignal.github.io/widget/gignal/images/facebook_blue.png')";
 };
 
 myFaceOut = function(the) {
-  return the.style.backgroundImage = "url('gignal/images/facebook_gray.png')";
+  return the.style.backgroundImage = "url('//gignal.github.io/widget/gignal/images/facebook_gray.png')";
 };
 
 barOver = function(the) {
