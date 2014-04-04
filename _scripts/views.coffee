@@ -16,7 +16,10 @@ class document.gignal.views.Event extends Backbone.View
     radix = 10
     magic = 15
     mainWidth = @$el.innerWidth()
-    columnsAsInt = parseInt(mainWidth / @columnWidth, radix)
+    if document.gignal.columns
+      columnsAsInt = document.gignal.columns
+    else
+      columnsAsInt = parseInt(mainWidth / @columnWidth, radix)
     @columnWidth = @columnWidth + (parseInt((mainWidth - (columnsAsInt * @columnWidth)) / columnsAsInt, radix) - magic)
     # init Isotope
     @$el.isotope @isotoptions
@@ -55,6 +58,8 @@ class document.gignal.views.UniBox extends Backbone.View
     # render
     @$el.html Templates.uni.render @model.getData(),
       footer: Templates.footer
+    if not document.gignal.footer
+      @$('.gignal-toolbox').hide()
     return @
   embedly: (link, callback) ->
     key = '3ce4f3260f2d41788751d9d3f43dcab2'

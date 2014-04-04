@@ -25,9 +25,9 @@ body{margin:0;padding:0}
 #gignal-stream #gignal-widget .gignal-outerbox img{border:none}
 #gignal-stream #gignal-widget .gignal-outerbox hr{border:0;height:1px;background:#fff;margin-bottom:0}
 #gignal-stream #gignal-widget .gignal-outerbox .gignal-unibox{position:relative;padding:10px;word-wrap:break-word;overflow:hidden;color:#333;text-align:center;}
-#gignal-stream #gignal-widget .gignal-outerbox .gignal-unibox .gignal-image{height:185px;background-size:cover;cursor:pointer}
+#gignal-stream #gignal-widget .gignal-outerbox .gignal-unibox .gignal-image{height:10em;background-size:cover;background-position:center center;cursor:pointer}
 #gignal-stream #gignal-widget .gignal-outerbox .gignal-unibox .gignal-image-loading{background-image:url("../../gignal/images/g.png");opacity:.1}
-#gignal-stream #gignal-widget .gignal-outerbox .gignal-unibox .message{font-family:Arial,sans-serif;max-height:200px;margin:5px 5px 0}
+#gignal-stream #gignal-widget .gignal-outerbox .gignal-unibox .message{font-family:Arial,sans-serif;margin:5px 5px 0}
 #gignal-stream #gignal-widget .gignal-outerbox .gignal-unibox .gignal-box-footer{margin-top:145px}
 #gignal-stream #gignal-widget .gignal-outerbox .gignal-toolbox{display:block;height:28px;background-color:#f6f6f6;border-top:1px solid #ddd;}
 #gignal-stream #gignal-widget .gignal-outerbox .gignal-toolbox span{display:inline-block;vertical-align:top;height:100%;float:left}

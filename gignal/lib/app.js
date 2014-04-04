@@ -229,7 +229,11 @@ document.gignal.views.Event = (function(_super) {
     radix = 10;
     magic = 15;
     mainWidth = this.$el.innerWidth();
-    columnsAsInt = parseInt(mainWidth / this.columnWidth, radix);
+    if (document.gignal.columns) {
+      columnsAsInt = document.gignal.columns;
+    } else {
+      columnsAsInt = parseInt(mainWidth / this.columnWidth, radix);
+    }
     this.columnWidth = this.columnWidth + (parseInt((mainWidth - (columnsAsInt * this.columnWidth)) / columnsAsInt, radix) - magic);
     return this.$el.isotope(this.isotoptions);
   };
@@ -291,6 +295,9 @@ document.gignal.views.UniBox = (function(_super) {
     this.$el.html(Templates.uni.render(this.model.getData(), {
       footer: Templates.footer
     }));
+    if (!document.gignal.footer) {
+      this.$('.gignal-toolbox').hide();
+    }
     return this;
   };
 
@@ -378,8 +385,14 @@ jQuery(function($) {
     cache: true
   });
   Backbone.$ = $;
+  document.gignal.columns = parseInt(getParameterByName('cols'));
+  document.gignal.footer = getParameterByName('footer') === 'false' ? false : true;
+  document.gignal.fontsize = parseFloat(getParameterByName('fontsize'));
   document.gignal.widget = new document.gignal.views.Event();
   document.gignal.stream = new Stream();
+  if (document.gignal.fontsize) {
+    $('body').css('font-size', document.gignal.fontsize + 'em');
+  }
   return $(window).on('scrollBottom', {
     offsetY: -500
   }, function() {

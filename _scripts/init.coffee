@@ -36,8 +36,14 @@ jQuery ($) ->
 
   Backbone.$ = $
 
+  document.gignal.columns = parseInt getParameterByName 'cols'
+  document.gignal.footer = if getParameterByName('footer') is 'false' then false else true
+  document.gignal.fontsize = parseFloat getParameterByName 'fontsize'
   document.gignal.widget = new document.gignal.views.Event()
   document.gignal.stream = new Stream()
+
+  if document.gignal.fontsize
+    $('body').css 'font-size', document.gignal.fontsize + 'em'
 
   $(window).on 'scrollBottom', offsetY: -500, ->
     document.gignal.stream.update true
