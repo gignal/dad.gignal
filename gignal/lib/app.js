@@ -1,4 +1,4 @@
-var Post, Stream, barOut, barOver, getParameterByName, getUrl, myBirdOut, myBirdOver, myFaceOut, myFaceOver, _ref, _ref1, _ref2, _ref3,
+var Post, Stream, barOut, barOver, getParameterByName, getUrl, myBirdOut, myBirdOver, myFaceOut, myFaceOver,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -12,8 +12,7 @@ Post = (function(_super) {
 
   function Post() {
     this.getData = __bind(this.getData, this);
-    _ref = Post.__super__.constructor.apply(this, arguments);
-    return _ref;
+    return Post.__super__.constructor.apply(this, arguments);
   }
 
   Post.prototype.idAttribute = 'objectId';
@@ -71,8 +70,7 @@ Stream = (function(_super) {
   function Stream() {
     this.update = __bind(this.update, this);
     this.inset = __bind(this.inset, this);
-    _ref1 = Stream.__super__.constructor.apply(this, arguments);
-    return _ref1;
+    return Stream.__super__.constructor.apply(this, arguments);
   }
 
   Stream.prototype.model = Post;
@@ -135,8 +133,7 @@ Stream = (function(_super) {
   };
 
   Stream.prototype.update = function(append) {
-    var offset, sinceTime,
-      _this = this;
+    var offset, sinceTime;
     this.append = append;
     if (this.calling) {
       return;
@@ -165,12 +162,16 @@ Stream = (function(_super) {
         offset: offset ? offset : void 0,
         sinceTime: _.isFinite(sinceTime) ? sinceTime : void 0
       },
-      success: function() {
-        return _this.calling = false;
-      },
-      error: function(c, response) {
-        return _this.calling = false;
-      }
+      success: (function(_this) {
+        return function() {
+          return _this.calling = false;
+        };
+      })(this),
+      error: (function(_this) {
+        return function(c, response) {
+          return _this.calling = false;
+        };
+      })(this)
     });
   };
 
@@ -204,8 +205,7 @@ document.gignal.views.Event = (function(_super) {
 
   function Event() {
     this.refresh = __bind(this.refresh, this);
-    _ref2 = Event.__super__.constructor.apply(this, arguments);
-    return _ref2;
+    return Event.__super__.constructor.apply(this, arguments);
   }
 
   Event.prototype.el = '#gignal-widget';
@@ -239,10 +239,11 @@ document.gignal.views.Event = (function(_super) {
   };
 
   Event.prototype.refresh = function() {
-    var _this = this;
-    return this.$el.imagesLoaded(function() {
-      return _this.$el.isotope(_this.isotoptions);
-    });
+    return this.$el.imagesLoaded((function(_this) {
+      return function() {
+        return _this.$el.isotope(_this.isotoptions);
+      };
+    })(this));
   };
 
   return Event;
@@ -254,8 +255,7 @@ document.gignal.views.UniBox = (function(_super) {
 
   function UniBox() {
     this.render = __bind(this.render, this);
-    _ref3 = UniBox.__super__.constructor.apply(this, arguments);
-    return _ref3;
+    return UniBox.__super__.constructor.apply(this, arguments);
   }
 
   UniBox.prototype.tagName = 'div';
@@ -267,17 +267,20 @@ document.gignal.views.UniBox = (function(_super) {
   };
 
   UniBox.prototype.initialize = function() {
-    var filter,
-      _this = this;
+    var filter;
     this.listenTo(this.model, 'change', this.render);
     if (this.model.get('type') === 'photo' || this.model.get('type') === 'video') {
-      $('<img/>').attr('src', this.model.get('large_photo')).load(function() {
-        $(_this).remove();
-        _this.$('.gignal-image').css('background-image', 'url(' + _this.model.get('large_photo') + ')');
-        return _this.$('.gignal-image').removeClass('gignal-image-loading');
-      }).error(function() {
-        return document.gignal.widget.$el.isotope('remove', _this.$el);
-      });
+      $('<img/>').attr('src', this.model.get('large_photo')).load((function(_this) {
+        return function() {
+          $(_this).remove();
+          _this.$('.gignal-image').css('background-image', 'url(' + _this.model.get('large_photo') + ')');
+          return _this.$('.gignal-image').removeClass('gignal-image-loading');
+        };
+      })(this)).error((function(_this) {
+        return function() {
+          return document.gignal.widget.$el.isotope('remove', _this.$el);
+        };
+      })(this));
       if ($.browser && $.browser.msie) {
         filter = 'progid:DXImageTransform.Microsoft.AlphaImageLoader(src="' + this.model.get('large_photo') + '",sizingMethod="scale");';
         this.$('.gignal-image').css('filter', filter);
