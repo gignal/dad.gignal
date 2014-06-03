@@ -36,7 +36,7 @@ class document.gignal.views.UniBox extends Backbone.View
     'click .gignal-image': 'showBigImg'
   initialize: ->
     @listenTo @model, 'change', @render
-    if @model.get('type') is 'photo' or @model.get('type') is 'video'
+    if @model.get('large_photo')
       $('<img/>').attr('src', @model.get('large_photo'))
       .load =>
         $(this).remove()
