@@ -269,7 +269,7 @@ document.gignal.views.UniBox = (function(_super) {
   UniBox.prototype.initialize = function() {
     var filter;
     this.listenTo(this.model, 'change', this.render);
-    if (this.model.get('type') === 'photo' || this.model.get('type') === 'video') {
+    if (this.model.get('large_photo')) {
       $('<img/>').attr('src', this.model.get('large_photo')).load((function(_this) {
         return function() {
           $(_this).remove();
