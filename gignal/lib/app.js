@@ -85,7 +85,7 @@ Stream = (function(_super) {
       console.error('Please set URI parameter eventid');
       return false;
     }
-    return '//gignal.parseapp.com/feed/' + eventid + '?callback=?';
+    return '//d2yrqknqjcrf8n.cloudfront.net/feed/' + eventid + '?callback=?';
   };
 
   Stream.prototype.calling = false;
