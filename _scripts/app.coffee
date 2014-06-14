@@ -55,7 +55,7 @@ class Stream extends Backbone.Collection
     if not eventid
       console.error 'Please set URI parameter eventid'
       return false
-    return '//gignal.parseapp.com/feed/' + eventid + '?callback=?'
+    return '//d2yrqknqjcrf8n.cloudfront.net/feed/' + eventid + '?callback=?'
     # if document.location.protocol is 'http:'
     #   return 'http://api.gignal.com/feed/' + eventid + '?callback=?'
     # else
