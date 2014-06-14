@@ -55,10 +55,11 @@ class Stream extends Backbone.Collection
     if not eventid
       console.error 'Please set URI parameter eventid'
       return false
-    if document.location.protocol is 'http:'
-      return 'http://api.gignal.com/feed/' + eventid + '?callback=?'
-    else
-      return '//gignal.parseapp.com/feed/' + eventid + '?callback=?'
+    return '//gignal.parseapp.com/feed/' + eventid + '?callback=?'
+    # if document.location.protocol is 'http:'
+    #   return 'http://api.gignal.com/feed/' + eventid + '?callback=?'
+    # else
+    #   return '//gignal.parseapp.com/feed/' + eventid + '?callback=?'
 
   calling: false
   parameters:

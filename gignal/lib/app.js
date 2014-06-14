@@ -85,11 +85,7 @@ Stream = (function(_super) {
       console.error('Please set URI parameter eventid');
       return false;
     }
-    if (document.location.protocol === 'http:') {
-      return 'http://api.gignal.com/feed/' + eventid + '?callback=?';
-    } else {
-      return '//gignal.parseapp.com/feed/' + eventid + '?callback=?';
-    }
+    return '//gignal.parseapp.com/feed/' + eventid + '?callback=?';
   };
 
   Stream.prototype.calling = false;
