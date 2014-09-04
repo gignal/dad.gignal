@@ -20,7 +20,8 @@ Post = (function(_super) {
   Post.prototype.re_links = /((http|https)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?)/g;
 
   Post.prototype.defaults = {
-    text: ''
+    text: '',
+    username: ''
   };
 
   Post.prototype.getData = function() {
@@ -77,14 +78,7 @@ Stream = (function(_super) {
 
   Stream.prototype.url = function() {
     var eventid;
-    eventid = $('#gignal-widget').data('eventid');
-    if (getParameterByName('eventid')) {
-      eventid = getParameterByName('eventid');
-    }
-    if (!eventid) {
-      console.error('Please set URI parameter eventid');
-      return false;
-    }
+    eventid = document.gignal.eventid;
     return '//d2yrqknqjcrf8n.cloudfront.net/feed/' + eventid + '?callback=?';
   };
 
@@ -99,7 +93,6 @@ Stream = (function(_super) {
   Stream.prototype.initialize = function() {
     this.on('add', this.inset);
     this.update();
-    this.setIntervalUpdate();
     return this.updateTimes();
   };
 
@@ -150,7 +143,6 @@ Stream = (function(_super) {
     }
     return this.fetch({
       remove: false,
-      cache: true,
       timeout: 15000,
       jsonpCallback: 'callme',
       data: {
@@ -164,7 +156,7 @@ Stream = (function(_super) {
         };
       })(this),
       error: (function(_this) {
-        return function(c, response) {
+        return function() {
           return _this.calling = false;
         };
       })(this)
@@ -287,6 +279,7 @@ document.gignal.views.UniBox = (function(_super) {
 
   UniBox.prototype.render = function() {
     this.$el.data('created', this.model.get('created'));
+    this.$el.data('created_on', this.model.get('created_on'));
     this.$el.css('width', document.gignal.widget.columnWidth);
     if (this.model.get('admin_entry')) {
       this.$el.addClass('gignal-owner');
@@ -380,15 +373,26 @@ barOut = function(the) {
 };
 
 jQuery(function($) {
+  var socket;
   $.ajaxSetup({
     cache: true
   });
   Backbone.$ = $;
+  document.gignal.eventid = $('#gignal-widget').data('eventid');
+  if (getParameterByName('eventid')) {
+    document.gignal.eventid = getParameterByName('eventid');
+  }
+  if (!document.gignal.eventid) {
+    console.error('Please set URI parameter eventid');
+    return;
+  }
   document.gignal.columns = parseInt(getParameterByName('cols'));
   document.gignal.footer = getParameterByName('footer') === 'false' ? false : true;
   document.gignal.fontsize = parseFloat(getParameterByName('fontsize'));
   document.gignal.widget = new document.gignal.views.Event();
   document.gignal.stream = new Stream();
+  socket = io.connect('http://gsocket.herokuapp.com:80/' + document.gignal.eventid);
+  socket.on('refresh', document.gignal.stream.update);
   if (document.gignal.fontsize) {
     $('body').css('font-size', document.gignal.fontsize + 'em');
   }

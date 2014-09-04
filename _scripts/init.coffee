@@ -36,11 +36,21 @@ jQuery ($) ->
 
   Backbone.$ = $
 
+  document.gignal.eventid = $('#gignal-widget').data('eventid')
+  if getParameterByName 'eventid'
+    document.gignal.eventid = getParameterByName 'eventid'
+  if not document.gignal.eventid
+    console.error 'Please set URI parameter eventid'
+    return
+
   document.gignal.columns = parseInt getParameterByName 'cols'
   document.gignal.footer = if getParameterByName('footer') is 'false' then false else true
   document.gignal.fontsize = parseFloat getParameterByName 'fontsize'
   document.gignal.widget = new document.gignal.views.Event()
   document.gignal.stream = new Stream()
+
+  socket = io.connect 'http://gsocket.herokuapp.com:80/' + document.gignal.eventid
+  socket.on 'refresh', document.gignal.stream.update
 
   if document.gignal.fontsize
     $('body').css 'font-size', document.gignal.fontsize + 'em'

@@ -50,6 +50,7 @@ class document.gignal.views.UniBox extends Backbone.View
         @$('.gignal-image').css '-ms-filter', '\'' + filter + '\''
   render: =>
     @$el.data 'created', @model.get('created')
+    @$el.data 'created_on', @model.get('created_on')
     # set width
     @$el.css 'width', document.gignal.widget.columnWidth
     # owner?

@@ -42,6 +42,7 @@ module.exports = (grunt) ->
             'bower_components/scrollbottom/src/jquery.scrollbottom.js'
             'bower_components/hogan/web/builds/2.0.0/template-2.0.0.js'
             'bower_components/magnific-popup/dist/jquery.magnific-popup.js'
+            'bower_components/socket.io-client/socket.io.js'
             'gignal/lib/templates.js'
             'gignal/lib/app.js'
           ]

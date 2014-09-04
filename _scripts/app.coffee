@@ -9,6 +9,7 @@ class Post extends Backbone.Model
 
   defaults:
     text: ''
+    username: ''
 
   getData: =>
     text = @get 'text'
@@ -49,12 +50,7 @@ class Stream extends Backbone.Collection
   model: Post
 
   url: ->
-    eventid = $('#gignal-widget').data('eventid')
-    if getParameterByName 'eventid'
-      eventid = getParameterByName 'eventid'
-    if not eventid
-      console.error 'Please set URI parameter eventid'
-      return false
+    eventid = document.gignal.eventid
     return '//d2yrqknqjcrf8n.cloudfront.net/feed/' + eventid + '?callback=?'
     # if document.location.protocol is 'http:'
     #   return 'http://api.gignal.com/feed/' + eventid + '?callback=?'
@@ -70,7 +66,7 @@ class Stream extends Backbone.Collection
   initialize: ->
     @on 'add', @inset
     @update()
-    @setIntervalUpdate()
+    # @setIntervalUpdate()
     @updateTimes()
 
   inset: (model) =>
@@ -105,7 +101,6 @@ class Stream extends Backbone.Collection
       offset = @parameters.offset += @parameters.limit
     @fetch
       remove: false
-      cache: true
       timeout: 15000
       jsonpCallback: 'callme'
       data:
@@ -114,7 +109,7 @@ class Stream extends Backbone.Collection
         sinceTime: sinceTime if _.isFinite sinceTime
       success: =>
         @calling = false
-      error: (c, response) =>
+      error: =>
         @calling = false
 
 
