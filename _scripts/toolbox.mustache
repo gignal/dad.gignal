@@ -1,0 +1,38 @@
+<div class="gignal-toolbox">
+	<span class="gignal-service">
+		<a href="{{link}}" target="_blank">
+			<p>{{service}}</p>
+		</a>
+	</span>
+	<span class="gignal-tool">
+		<ul>
+			{{#Twitter}}
+			<li class="retweet" style="background-image: url('//gignal.github.io/widget/gignal/images/sprite-social.png');" onmouseover="barOver(this)" onmouseout="barOut(this)">
+				<span class="gignal-contener">
+					<a style="background-image: url('//gignal.github.io/widget/gignal/images/twitter_gray.png');" href="https://twitter.com/intent/retweet?tweet_id={{Twitter}}" onmouseover="myBirdOver(this)" onmouseout="myBirdOut(this)">Retweet</a>
+				</span>
+				<p></p>
+			</li>
+			<li class="reply" style="background-image: url('//gignal.github.io/widget/gignal/images/sprite-social.png');" onmouseover="barOver(this)" onmouseout="barOut(this)">
+				<span class="gignal-contener">
+					<a style="background-image: url('//gignal.github.io/widget/gignal/images/twitter_gray.png');" href="https://twitter.com/intent/tweet?in_reply_to={{Twitter}}" onmouseover="myBirdOver(this)" onmouseout="myBirdOut(this)">Reply</a>
+				</span>
+				<p></p>
+			</li>
+			{{/Twitter}}
+			<li class="post" style="background-image: url('//gignal.github.io/widget/gignal/images/sprite-social.png');" onmouseover="barOver(this)" onmouseout="barOut(this)">
+				<span {{#Twitter}} style="left:-182px;" {{/Twitter}} class="gignal-contener">
+					<a class="Facebook" style="background-image: url('//gignal.github.io/widget/gignal/images/facebook_gray.png');" onclick="{{postFB}}" onmouseover="myFaceOver(this)" onmouseout="myFaceOut(this)">Facebook</a>
+				</span>
+				<p></p>
+			</li>
+			<li class="share" style="background-image: url('//gignal.github.io/widget/gignal/images/sprite-social.png');" onmouseover="barOver(this)" onmouseout="barOut(this)">
+				<span {{#Twitter}} style="left:-214px;" {{/Twitter}} class="gignal-contener">
+					<a class="Facebook" style="background-image: url('//gignal.github.io/widget/gignal/images/facebook_gray.png');" onclick="{{shareFB}}" onmouseover="myFaceOver(this)" onmouseout="myFaceOut(this)">Facebook</a>
+					<a class="Twitter" style="margin-left:10px;background-image: url('//gignal.github.io/widget/gignal/images/twitter_gray.png');" onclick="{{shareTT}}" onmouseover="myBirdOver(this)" onmouseout="myBirdOut(this)">Twitter</a>
+				</span>
+				<p></p>
+			</li>
+		</ul>
+	</span>
+</div>
