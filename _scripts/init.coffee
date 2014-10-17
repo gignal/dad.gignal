@@ -49,8 +49,9 @@ jQuery ($) ->
   document.gignal.widget = new document.gignal.views.Event()
   document.gignal.stream = new Stream()
 
-  socket = io.connect 'http://gsocket.herokuapp.com:80/' + document.gignal.eventid
-  socket.on 'refresh', document.gignal.stream.update
+  io.connect 'ws://gsocket.herokuapp.com:80/' + document.gignal.eventid,
+    transports: ['websocket']
+  .on 'refresh', document.gignal.stream.update
 
   if document.gignal.fontsize
     $('body').css 'font-size', document.gignal.fontsize + 'em'
