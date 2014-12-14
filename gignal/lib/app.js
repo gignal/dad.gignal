@@ -255,13 +255,14 @@ document.gignal.views.UniBox = (function(_super) {
   };
 
   UniBox.prototype.initialize = function() {
-    var filter;
+    var filter, photoType;
     this.listenTo(this.model, 'change', this.render);
-    if (this.model.get('large_photo')) {
-      $('<img/>').attr('src', this.model.get('large_photo')).load((function(_this) {
+    photoType = 'large_photo';
+    if (this.model.get(photoType)) {
+      $('<img/>').attr('src', this.model.get(photoType)).load((function(_this) {
         return function() {
           $(_this).remove();
-          _this.$('.gignal-image').css('background-image', 'url(' + _this.model.get('large_photo') + ')');
+          _this.$('.gignal-image').css('background-image', 'url("' + _this.model.get(photoType) + '")');
           return _this.$('.gignal-image').removeClass('gignal-image-loading');
         };
       })(this)).error((function(_this) {
@@ -270,7 +271,7 @@ document.gignal.views.UniBox = (function(_super) {
         };
       })(this));
       if ($.browser && $.browser.msie) {
-        filter = 'progid:DXImageTransform.Microsoft.AlphaImageLoader(src="' + this.model.get('large_photo') + '",sizingMethod="scale");';
+        filter = 'progid:DXImageTransform.Microsoft.AlphaImageLoader(src="' + this.model.get(photoType) + '",sizingMethod="scale");';
         this.$('.gignal-image').css('filter', filter);
         return this.$('.gignal-image').css('-ms-filter', '\'' + filter + '\'');
       }
