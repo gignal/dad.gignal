@@ -36,16 +36,17 @@ class document.gignal.views.UniBox extends Backbone.View
     'click .gignal-image': 'showBigImg'
   initialize: ->
     @listenTo @model, 'change', @render
-    if @model.get('large_photo')
-      $('<img/>').attr('src', @model.get('large_photo'))
+    photoType = 'large_photo'
+    if @model.get(photoType)
+      $('<img/>').attr('src', @model.get(photoType))
       .load =>
         $(this).remove()
-        @$('.gignal-image').css 'background-image', 'url(' + @model.get('large_photo') + ')'
+        @$('.gignal-image').css 'background-image', 'url("' + @model.get(photoType) + '")'
         @$('.gignal-image').removeClass 'gignal-image-loading'
       .error =>
         document.gignal.widget.$el.isotope 'remove', @$el
       if $.browser and $.browser.msie
-        filter = 'progid:DXImageTransform.Microsoft.AlphaImageLoader(src="' + @model.get('large_photo') + '",sizingMethod="scale");'
+        filter = 'progid:DXImageTransform.Microsoft.AlphaImageLoader(src="' + @model.get(photoType) + '",sizingMethod="scale");'
         @$('.gignal-image').css 'filter', filter
         @$('.gignal-image').css '-ms-filter', '\'' + filter + '\''
   render: =>
