@@ -306,7 +306,7 @@ document.gignal.views.UniBox = (function(superClass) {
   UniBox.prototype.showVideo = function() {
     return $.magnificPopup.open({
       items: {
-        type: 'iframe',
+        type: 'ajax',
         src: this.model.get('link')
       }
     });

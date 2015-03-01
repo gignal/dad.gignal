@@ -71,7 +71,7 @@ class document.gignal.views.UniBox extends Backbone.View
   showVideo: ->
     $.magnificPopup.open
       items:
-        type: 'iframe'
+        type: 'ajax'
         src: @model.get 'link'
   showBigImg: ->
     if @model.get('type') is 'video'
