@@ -69,11 +69,10 @@ class document.gignal.views.UniBox extends Backbone.View
     $.getJSON url, (data) ->
       callback null, data.html
   showVideo: ->
-    @embedly @model.get('link'), (err, html) ->
-      $.magnificPopup.open
-        items:
-          type: 'inline'
-          src: html
+    $.magnificPopup.open
+      items:
+        type: 'iframe'
+        src: @model.get 'link'
   showBigImg: ->
     if @model.get('type') is 'video'
       return @showVideo()
