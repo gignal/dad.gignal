@@ -1,17 +1,17 @@
 var Post, Stream, barOut, barOver, getParameterByName, getUrl, myBirdOut, myBirdOver, myFaceOut, myFaceOver,
-  __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-  __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+  hasProp = {}.hasOwnProperty;
 
 document.gignal = {
   views: {}
 };
 
-Post = (function(_super) {
-  __extends(Post, _super);
+Post = (function(superClass) {
+  extend(Post, superClass);
 
   function Post() {
-    this.getData = __bind(this.getData, this);
+    this.getData = bind(this.getData, this);
     return Post.__super__.constructor.apply(this, arguments);
   }
 
@@ -65,12 +65,12 @@ Post = (function(_super) {
 
 })(Backbone.Model);
 
-Stream = (function(_super) {
-  __extends(Stream, _super);
+Stream = (function(superClass) {
+  extend(Stream, superClass);
 
   function Stream() {
-    this.update = __bind(this.update, this);
-    this.inset = __bind(this.inset, this);
+    this.update = bind(this.update, this);
+    this.inset = bind(this.inset, this);
     return Stream.__super__.constructor.apply(this, arguments);
   }
 
@@ -188,11 +188,11 @@ Stream = (function(_super) {
 
 })(Backbone.Collection);
 
-document.gignal.views.Event = (function(_super) {
-  __extends(Event, _super);
+document.gignal.views.Event = (function(superClass) {
+  extend(Event, superClass);
 
   function Event() {
-    this.refresh = __bind(this.refresh, this);
+    this.refresh = bind(this.refresh, this);
     return Event.__super__.constructor.apply(this, arguments);
   }
 
@@ -238,11 +238,11 @@ document.gignal.views.Event = (function(_super) {
 
 })(Backbone.View);
 
-document.gignal.views.UniBox = (function(_super) {
-  __extends(UniBox, _super);
+document.gignal.views.UniBox = (function(superClass) {
+  extend(UniBox, superClass);
 
   function UniBox() {
-    this.render = __bind(this.render, this);
+    this.render = bind(this.render, this);
     return UniBox.__super__.constructor.apply(this, arguments);
   }
 
@@ -304,13 +304,11 @@ document.gignal.views.UniBox = (function(_super) {
   };
 
   UniBox.prototype.showVideo = function() {
-    return this.embedly(this.model.get('link'), function(err, html) {
-      return $.magnificPopup.open({
-        items: {
-          type: 'inline',
-          src: html
-        }
-      });
+    return $.magnificPopup.open({
+      items: {
+        type: 'iframe',
+        src: this.model.get('link')
+      }
     });
   };
 
